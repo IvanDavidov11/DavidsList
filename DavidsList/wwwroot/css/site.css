@@ -1,5 +1,9 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
+body{
+    background-color:black;
+    color: white
+}
 
 a.navbar-brand {
     white-space: normal;
@@ -80,7 +84,7 @@ body {
     display: block;
     margin-left: auto;
     margin-right: auto;
-    width: 80%;
+    width: 30%;
 }
 
 .logo {
@@ -91,29 +95,36 @@ body {
 
 .list {
     list-style: none;
+    margin:0px;
+    padding:0px;
 }
 
     .list li {
-        float: left;
-        width: 50%;
+        width: 100%;
+        display: inline-block;
+        /*float: left;*/
         text-align: center;
-        padding-bottom: 100px;
-    }
+        padding-bottom: 150px;
+        margin-left: inherit;
+        margin-right: inherit;
+    } 
 
     .list div.regular {
         border-block-color: black;
         border-style: solid;
-        background-color: lightgray;
+        border: 3px solid #ddd;
+        border-radius: 12px;
+        /*background-color: lightgray;*/
         margin: 0px 10px 0px 10px;
         height: 800px
     }
 
     .list div.topRated {
-        border-block-color: black;
+        /*border-block-color: black;
         border-style: solid;
-        background-color: lightgray;
+        background-color: lightgray;*/
         margin: 0px 10px 0px 10px;
-        height: 900px
+        height: 600px
     }
 
     .list a {
@@ -122,36 +133,4 @@ body {
         margin-right: 20px;
     }
 
-/*.listTopRated {
-    list-style: none;
-}
-
-    .listTopRated li {
-        float: left;
-        width: 50%;
-        text-align: center;
-        padding-bottom: 100px;
-    }
-
-    .listTopRated div.special {
-        border-block-color: black;
-        border-style: solid;
-        background-color: lightgray;
-        margin: 0px 10px 0px 10px;
-        height: 900px
-    }
-
-    .listTopRated div.test {
-        border-block-color: black;
-        border-style: solid;
-        background-color: lightgray;
-        margin: 0px 10px 0px 10px;
-        height: 900px
-    }
-
-
-    .listTopRated a {
-        width: 25px;
-        height: 25px;
-        margin-right: 20px;
-    }*/
+    
