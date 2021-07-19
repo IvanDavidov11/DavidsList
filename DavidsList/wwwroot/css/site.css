@@ -81,7 +81,7 @@ body {
     border: 3px solid #ddd;
     border-radius: 12px;
     padding: 5px;
-    display: block;
+    display: inline;
     margin-left: auto;
     margin-right: auto;
     width: 30%;
@@ -91,7 +91,9 @@ body {
     width: 20%;
 }
 
-
+.ignoreMargin{
+   
+}
 
 .list {
     list-style: none;
@@ -102,27 +104,18 @@ body {
     .list li {
         width: 100%;
         display: inline-block;
-        /*float: left;*/
         text-align: center;
-        padding-bottom: 150px;
+        padding-bottom: 85px;
         margin-left: inherit;
         margin-right: inherit;
-    } 
+    }
 
     .list div.regular {
-        border-block-color: black;
-        border-style: solid;
-        border: 3px solid #ddd;
-        border-radius: 12px;
-        /*background-color: lightgray;*/
         margin: 0px 10px 0px 10px;
-        height: 800px
+        height: 600px
     }
 
     .list div.topRated {
-        /*border-block-color: black;
-        border-style: solid;
-        background-color: lightgray;*/
         margin: 0px 10px 0px 10px;
         height: 600px
     }

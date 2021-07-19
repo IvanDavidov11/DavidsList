@@ -1,47 +1,43 @@
 ﻿<div style="background-color: darkslategray" class="jumbotron">
     <h1 style="text-align:center; " class="display-4">Top 10 Rated Movies!</h1>
-    <p style="text-align:center" class="lead">Here you will find the most rated movies of all time.</p>
+    <p style="text-align:center" class="lead">Here you will find the most highly rated movies of all time.</p>
 </div>
 
 <ol class="list">
     @foreach (var movie in Model)
     {
-        <li>
-            <div class="topRated">
-                <a href="MovieDetails/@movie.MoviePath">
-                    <img class="thumbnailPic" src="@movie.ImgUrl">
-                </a>
-                <h1>@movie.Title</h1>
-                <h3>Relase Date: @movie.Year</h3>
-                <h4>IMDb Raiting: @movie.Raiting/10</h4>
-                <partial name="_ButtonsPartial" model="@movie.MoviePath"/>
-            </div>
-        </li>
-
-        <li>
-            <div class="topRated">
-                <a href="MovieDetails/@movie.MoviePath">
-                    <img class="thumbnailPic" src="@movie.ImgUrl">
-                </a>
-                <h1>@movie.Title</h1>
-                <h3>@movie.Year</h3>
-                <h4>IMDb Raiting: @movie.Raiting/10</h4>
-                <partial name="_ButtonsPartial" />
-            </div>
-
-        </li>
-
-        <li>
-            <div class="topRated">
-                <a href="MovieDetails/@movie.MoviePath">
-                    <img class="thumbnailPic" src="@movie.ImgUrl">
-                </a>
-                <h1>@movie.Title</h1>
-                <h3>@movie.Year</h3>
-                <h4>IMDb Raiting: @movie.Raiting/10</h4>
-                <partial name="_ButtonsPartial" />
-            </div>
-
-        </li>
+    <li>
+        <div class="topRated">
+            <a href="MovieDetails?id=@movie.MoviePath">
+                <img class="thumbnailPic" src="@movie.ImgUrl">
+            </a>
+            <h1>@movie.Title</h1>
+            <h3>Relase Date: @movie.Year</h3>
+            <h4>IMDb Raiting: @movie.Raiting/10</h4>
+            <partial name="_ButtonsPartial" model="@movie.MoviePath" />
+        </div>
+    </li>
+    <li>
+        <div class="topRated">
+            <a href="MovieDetails/@movie.MoviePath">
+                <img class="thumbnailPic" src="@movie.ImgUrl">
+            </a>
+            <h1>@movie.Title</h1>
+            <h3>Relase Date: @movie.Year</h3>
+            <h4>IMDb Raiting: @movie.Raiting/10</h4>
+            <partial name="_ButtonsPartial" model="@movie.MoviePath" />
+        </div>
+    </li>
+    <li>
+        <div class="topRated">
+            <a href="MovieDetails/@movie.MoviePath">
+                <img class="thumbnailPic" src="@movie.ImgUrl">
+            </a>
+            <h1>@movie.Title</h1>
+            <h3>Relase Date: @movie.Year</h3>
+            <h4>IMDb Raiting: @movie.Raiting/10</h4>
+            <partial name="_ButtonsPartial" model="@movie.MoviePath" />
+        </div>
+    </li>
     }
 </ol>

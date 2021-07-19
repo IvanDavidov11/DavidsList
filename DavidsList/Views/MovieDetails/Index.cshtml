@@ -1,0 +1,18 @@
+﻿<div class="topRated">
+
+    <img class="thumbnailPic" src="@Model.ImgUrl">
+    <h1>@Model.Title</h1>
+    <h3>Relase Date: @Model.ReleaseDate</h3>
+    <h4>IMDb Raiting: @Model.Raiting/10 (@Model.RaitingCount)</h4>
+    <h5>
+        Genres:
+        @foreach (var genre in Model.Genres)
+        {
+            <a>@genre</a>
+        }
+    </h5>
+    <p>@Model.ShortPlot</p>
+    <p>@Model.LongPlot</p>
+
+    <partial name="_ButtonsPartial" model="@Model.MoviePath" />
+</div>
