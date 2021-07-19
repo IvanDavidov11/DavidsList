@@ -14,3 +14,4 @@ TODO:
 5. Implement search bar functionality.
 6. Create random movie generator engine.
 7. Fix various desing issues.
+8. Create Account Details page.
