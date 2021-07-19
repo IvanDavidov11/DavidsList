@@ -1,3 +1,9 @@
+Functionality so far: 
+1. Home page (WIP)
+2. "I'm Bored" Dropdown button.
+ 2.1 Random Movie Generator (WIP)
+ 2.2 Most Popular movies list (WIP)
+ 2.3 Top Rated movies list (WIP)
 
 
 TODO:
