@@ -2,6 +2,7 @@ namespace DavidsList
 {
     using DavidsList.Data;
     using DavidsList.Infrastructures;
+    using DavidsList.Services;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Identity;
@@ -31,8 +32,8 @@ namespace DavidsList
                     options.Password.RequireDigit = false;
                 })
                 .AddEntityFrameworkStores<DavidsListDbContext>();
-
             services.AddControllersWithViews();
+            services.AddTransient<IGetInformationFromApi, GetInformationFromApi>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
