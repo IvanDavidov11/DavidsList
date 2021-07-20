@@ -30,10 +30,10 @@
                 Method = HttpMethod.Get,
                 RequestUri = new Uri("https://imdb8.p.rapidapi.com/title/get-top-rated-movies"),
                 Headers =
-                 {
-                     { "x-rapidapi-key", "6e96b86691mshebfd322284464b6p1c6f16jsnc9e27395f9df" },
-                     { "x-rapidapi-host", "imdb8.p.rapidapi.com" },
-                 },
+                        {
+                            { "x-rapidapi-key", IMDbApiKey },
+                            { "x-rapidapi-host", IMDbApiHost },
+                        },
             };
             using (var response = await client.SendAsync(request))
             {
@@ -60,8 +60,8 @@
                     RequestUri = new Uri($"https://imdb8.p.rapidapi.com/title/get-details?tconst={curMovie.id}"),
                     Headers =
                         {
-                            { "x-rapidapi-key", "6e96b86691mshebfd322284464b6p1c6f16jsnc9e27395f9df" },
-                            { "x-rapidapi-host", "imdb8.p.rapidapi.com" },
+                            { "x-rapidapi-key", IMDbApiKey },
+                            { "x-rapidapi-host", IMDbApiHost },
                         },
                 };
                 using (var response = await client.SendAsync(request))
