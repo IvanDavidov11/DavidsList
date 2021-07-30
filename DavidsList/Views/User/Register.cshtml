@@ -1,0 +1,52 @@
+﻿<div class="container">
+    <main role="main" class="pb-3">
+        <h1>Register</h1>
+        <div class="row">
+            <div class="col-md-4">
+                <form id="registerForm" method="post" action="/User/Register" novalidate="novalidate">
+                    <h4>Create a new account.</h4>
+                    <hr>
+
+                    <div class="form-group">
+                        <label for="Input_Email">Email</label>
+                        <input class="form-control" autocomplete="username" type="email" data-val="true" data-val-email="The Email field is not a valid e-mail address." data-val-required="The Email field is required." id="Input_Email" name="Input.Email" value="">
+                        <span class="text-danger field-validation-valid" data-valmsg-for="Input.Email" data-valmsg-replace="true"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="Input_Email">Username</label>
+                        <input class="form-control" autocomplete="username" data-val="true" data-val-required="The Username field is required." id="Input_Username" name="Input.Username" value="">
+                        <span class="text-danger field-validation-valid" data-valmsg-for="Input.Username" data-valmsg-replace="true"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="Input_Password">Password</label>
+                        <input class="form-control" autocomplete="new-password" type="password" data-val="true" data-val-length="The Password must be at least 6 and at max 100 characters long." data-val-length-max="100" data-val-length-min="6" data-val-required="The Password field is required." id="Input_Password" maxlength="100" name="Input.Password">
+                        <span class="text-danger field-validation-valid" data-valmsg-for="Input.Password" data-valmsg-replace="true"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="Input_ConfirmPassword">Confirm password</label>
+                        <input class="form-control" autocomplete="new-password" type="password" data-val="true" data-val-equalto="The password and confirmation password do not match." data-val-equalto-other="*.Password" id="Input_ConfirmPassword" name="Input.ConfirmPassword">
+                        <span class="text-danger field-validation-valid" data-valmsg-for="Input.ConfirmPassword" data-valmsg-replace="true"></span>
+                    </div>
+                    <button id="registerSubmit" type="submit" class="btn btn-primary">Register</button>
+                    <input name="__RequestVerificationToken" type="hidden" value="CfDJ8B__fkIdgU5MoaNRcqVSn7cX2ylF2CeWm31X6GaLAfPYJT2cm-4WLUV-GY_g1BkGfK8U9wc26H96O0agDMX2xVq04Ma7WagQRTkQBtVK_oNX9CmDLH44KtsRvPxOPXr6_VqO5H4qCqYFxQPtvzA368U">
+                </form>
+            </div>
+            <div class="col-md-6 col-md-offset-2">
+                <section>
+                    <h4>Use another service to register.</h4>
+                    <hr>
+                    <div>
+                        <p>
+                            There are no external authentication services configured. See this <a href="https://go.microsoft.com/fwlink/?LinkID=532715">
+                                article
+                                about setting up this ASP.NET application to support logging in via external services
+                            </a>.
+                        </p>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+
+    </main>
+</div>

@@ -5,14 +5,14 @@
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
 
-    public class DavidsListDbContext : IdentityDbContext
+    public class DavidsListDbContext : IdentityDbContext<User>
     {
         public DavidsListDbContext(DbContextOptions<DavidsListDbContext> options)
             : base(options)
         {
         }
         public DbSet<Genre> Genres { get; set; }
-        public DbSet<User> ReggedUsers { get; init; }
+        //public DbSet<User> ReggedUsers { get; init; }
         public DbSet<Movie> Movies { get; init; }
         public DbSet<Comment> Comments { get; init; }
         public DbSet<GenreUser> GenresUsers { get; init; }

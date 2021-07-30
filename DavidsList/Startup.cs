@@ -1,6 +1,7 @@
 namespace DavidsList
 {
     using DavidsList.Data;
+    using DavidsList.Data.DbModels;
     using DavidsList.Infrastructures;
     using DavidsList.Services;
     using Microsoft.AspNetCore.Builder;
@@ -27,9 +28,11 @@ namespace DavidsList
 
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddDefaultIdentity<IdentityUser>(options =>
+            services.AddDefaultIdentity<User>(options =>
                 {
                     options.Password.RequireDigit = false;
+                    options.Password.RequireNonAlphanumeric = false;
+                    options.Password.RequireUppercase = false;
                 })
                 .AddEntityFrameworkStores<DavidsListDbContext>();
             services.AddControllersWithViews();

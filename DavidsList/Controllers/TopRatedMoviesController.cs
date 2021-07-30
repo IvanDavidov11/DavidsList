@@ -3,7 +3,6 @@
     using DavidsList.Services;
     using Microsoft.AspNetCore.Mvc;
 
-
     public class TopRatedMoviesController : Controller
     {
         private readonly IGetInformationFromApi ApiConnector;
@@ -14,7 +13,7 @@
         }
         public IActionResult Index()
         {
-            var model = this.ApiConnector.GetMovieShowcaseViewModelWithRaiting();
+            var model = this.ApiConnector.GetTopRatedMovieShowcaseViewModel();
             return View(model);
         }
     }
