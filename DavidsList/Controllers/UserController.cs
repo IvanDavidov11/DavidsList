@@ -50,7 +50,7 @@
                 return View(model);
             }
 
-            return RedirectToAction("User", "Login");
+            return RedirectToAction("Login", "User");
         }
         
         public IActionResult Login()
@@ -78,7 +78,14 @@
             }
 
             await this.signInManager.SignInAsync(loggedUser,true);
-            return RedirectToAction("Home", "Index");
+            return RedirectToAction("Index", "Home");
         }
+
+        public async Task<IActionResult> Logout()
+        {
+            await this.signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Home");
+        }
+
     }
 }
