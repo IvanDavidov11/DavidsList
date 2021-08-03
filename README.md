@@ -6,7 +6,7 @@ Functionality so far:
  2.3 Top Rated Movies page with top 10 most highly rated movies of all time. (WIP)
 3. Movie Details page that gives various information on specific movie. (WIP)
 4. Register page with functioning registration. (WIP)
-5. Bare login page with little functionality. (WIP)
+5. Login page with basic authentication functionality. (WIP)
 
 
 TODO:
