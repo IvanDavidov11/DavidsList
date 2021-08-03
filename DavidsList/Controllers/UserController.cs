@@ -1,9 +1,11 @@
 ﻿namespace DavidsList.Controllers
 {
+    using DavidsList.Data;
     using DavidsList.Data.DbModels;
     using DavidsList.Models.FormModels;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -11,11 +13,13 @@
     {
         private readonly UserManager<User> userManager;
         private readonly SignInManager<User> signInManager;
+        private readonly DavidsListDbContext data;
 
-        public UserController(UserManager<User> userManager, SignInManager<User> signInManager)
+        public UserController(UserManager<User> userManager, SignInManager<User> signInManager, DavidsListDbContext db)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
+            this.data = db;
         }
 
         public IActionResult Register()
@@ -31,12 +35,26 @@
                 return View(model);
             }
 
-
             var registeredUser = new User
             {
                 Email = model.Email,
                 UserName = model.Username,
             };
+            var anythingTaken = false;
+            if (this.data.Users.FirstOrDefault(x => x.Email == model.Email) != null)
+            {
+                ModelState.AddModelError("EmailTaken", "This E-Mail is already taken. Please try again using another...");
+                anythingTaken = true;
+            };
+            if (this.data.Users.FirstOrDefault(x => x.NormalizedUserName == model.Username.ToUpper()) != null)
+            {
+                ModelState.AddModelError("UNameTaken", "This Username is already taken. Please try again using another...");
+                anythingTaken = true;
+            };
+            if (!anythingTaken)
+            {
+                return View(model);
+            }
 
             var result = await this.userManager.CreateAsync(registeredUser, model.Password);
             if (!result.Succeeded)
@@ -45,7 +63,7 @@
 
                 foreach (var error in errors)
                 {
-                    ModelState.AddModelError(string.Empty, error);
+                    ModelState.AddModelError("RegFailed", error);
                 }
                 return View(model);
             }
@@ -61,6 +79,10 @@
         [HttpPost]
         public async Task<IActionResult> Login(LoginFormModel model)
         {
+            if (model.Username == null || model.Password == null)
+            {
+                return View(model);
+            }
             var loggedUser = await this.userManager.FindByNameAsync(model.Username);
 
             if (loggedUser == null)
@@ -86,6 +108,7 @@
             await this.signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
-
+      
     }
+   
 }

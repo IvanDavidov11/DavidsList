@@ -1,4 +1,5 @@
 ﻿@model RegisterFormModel
+@using static DavidsList.Data.DataConstants
 
 <h1>Register</h1>
 <div class="row">
@@ -7,20 +8,33 @@
             <h4>Create a new account.</h4>
             <hr>
             <div class="form-group">
-                <label asp-for="Email">Email</label>
+                <label asp-for="Email">Email *</label>
                 <input asp-for="Email" class="form-control">
+                <span asp-validation-for="Email" class="text-danger"></span>
+                <span class="text-danger">
+                    @Html.ValidationMessage("EmailTaken")
+                </span>
+
             </div>
             <div class="form-group">
-                <label asp-for="Username">Username</label>
-                <input asp-for="Username" class="form-control" >
+                <label asp-for="Username">Username * <a style="color:gray">(@UsernameMinLength-@UsernameMaxLength character limit)</a></label>
+                <input asp-for="Username" class="form-control">
+                <span asp-validation-for="Username" class="text-danger"></span>
+                <span class="text-danger">
+                    @Html.ValidationMessage("UNameTaken")
+                </span>
             </div>
             <div class="form-group">
-                <label asp-for="Password">Password</label>
-                <input asp-for="Password" class="form-control">
+                <label asp-for="Password">Password * <a style="color:gray">(@PasswordMinLength-@PasswordMaxLength character limit)</a></label>
+                <input type="password" asp-for="Password" class="form-control">
+                <span asp-validation-for="Password" class="text-danger"></span>
+
             </div>
             <div class="form-group">
-                <label asp-for="ConfirmPassword">Confirm password</label>
-                <input asp-for="ConfirmPassword" class="form-control">
+                <label asp-for="ConfirmPassword">Confirm password *</label>
+                <input type="password" asp-for="ConfirmPassword" class="form-control">
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+
             </div>
             <button id="registerSubmit" type="submit" class="btn btn-primary">Register</button>
             <input name="__RequestVerificationToken" type="hidden" value="CfDJ8B__fkIdgU5MoaNRcqVSn7cX2ylF2CeWm31X6GaLAfPYJT2cm-4WLUV-GY_g1BkGfK8U9wc26H96O0agDMX2xVq04Ma7WagQRTkQBtVK_oNX9CmDLH44KtsRvPxOPXr6_VqO5H4qCqYFxQPtvzA368U">

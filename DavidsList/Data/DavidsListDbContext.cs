@@ -12,7 +12,6 @@
         {
         }
         public DbSet<Genre> Genres { get; set; }
-        //public DbSet<User> ReggedUsers { get; init; }
         public DbSet<Movie> Movies { get; init; }
         public DbSet<Comment> Comments { get; init; }
         public DbSet<GenreUser> GenresUsers { get; init; }
