@@ -11,14 +11,23 @@
     <header>
         <nav class="navbar navbar-dark bg-secondary navbar-expand-sm navbar-toggleable-sm box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand"  asp-area="" asp-controller="Home" asp-action="Index" >
-                    <img class="logo" src="~/logo-transparent.png"/>
+                <a class="logoHolder" href="/">
+                    <img class="logo" src="~/logo-transparent-resized.png" />
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
+                <div class="searchBar">
+                    <form action="/Search">
+                        <input class="searchBarInput" type="text" placeholder="Search for a Movie..." name="name" />
+                        <button class="searchBarButton" type="submit" >
+                            <i>Search</i>
+                        </button>
+                    </form>
+                    
+                </div>
                 <div class="dropdown show">
                     <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Im Bored!
@@ -30,8 +39,8 @@
                         <a class="dropdown-item" href="/MostPopularMovies">Most Popular Movies</a>
                     </div>
                 </div>
-                    <partial name="_LoginPartial" />
-                </div>
+                <partial name="_LoginPartial" />
+            </div>
         </nav>
     </header>
     <div class="container">

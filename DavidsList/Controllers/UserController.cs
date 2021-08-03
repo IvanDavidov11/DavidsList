@@ -28,6 +28,7 @@
         }
 
         [HttpPost]
+        
         public async Task<IActionResult> Register(RegisterFormModel model)
         {
             if (!ModelState.IsValid)
@@ -40,18 +41,8 @@
                 Email = model.Email,
                 UserName = model.Username,
             };
-            var anythingTaken = false;
-            if (this.data.Users.FirstOrDefault(x => x.Email == model.Email) != null)
-            {
-                ModelState.AddModelError("EmailTaken", "This E-Mail is already taken. Please try again using another...");
-                anythingTaken = true;
-            };
-            if (this.data.Users.FirstOrDefault(x => x.NormalizedUserName == model.Username.ToUpper()) != null)
-            {
-                ModelState.AddModelError("UNameTaken", "This Username is already taken. Please try again using another...");
-                anythingTaken = true;
-            };
-            if (!anythingTaken)
+            var anythingTaken = checkForAvaliabilty(model);
+            if (anythingTaken)
             {
                 return View(model);
             }
@@ -70,7 +61,23 @@
 
             return RedirectToAction("Login", "User");
         }
-        
+
+        private bool checkForAvaliabilty(RegisterFormModel model)
+        {
+            var result = false;
+            if (this.data.Users.FirstOrDefault(x => x.Email == model.Email) != null)
+            {
+                ModelState.AddModelError("EmailTaken", "This E-Mail is already taken. Please try again using another...");
+                result = true;
+            };
+            if (this.data.Users.FirstOrDefault(x => x.NormalizedUserName == model.Username.ToUpper()) != null)
+            {
+                ModelState.AddModelError("UNameTaken", "This Username is already taken. Please try again using another...");
+                result = true;
+            };
+            return result;
+        }
+
         public IActionResult Login()
         {
             return View();
