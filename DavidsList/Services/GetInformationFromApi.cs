@@ -4,13 +4,15 @@
     using System.Linq;
     using System.Net.Http;
     using Newtonsoft.Json;
-    using DavidsList.Models.API;
+    using System.Threading;
     using System.Threading.Tasks;
     using static Data.DataConstants;
     using System.Collections.Generic;
     using DavidsList.Models.ViewModels;
     using DavidsList.Models.API.SearchResults;
-    using System.Threading;
+    using DavidsList.Models.API.TopRatedMovies;
+    using DavidsList.Models.API.MostPopularMovies;
+    using DavidsList.Models.MovieDetails;
 
     public class GetInformationFromApi : IGetInformationFromApi
     {
@@ -75,7 +77,9 @@
             var idsOfMoviesWithRaiting = GetIdsForMoviesInApi_MostRated().Result;
 
             var movies = new List<MovieQuickShowcaseViewModelWithRaiting>();
-            var batchSize = 5;
+
+            var batchSize = AmountOfMoviesToPull == 1 ? 1 : 5;
+
             int numberOfBatches = AmountOfMoviesToPull / batchSize;
 
             for (int i = 0; i < numberOfBatches; i++)
@@ -146,7 +150,7 @@
         {
             List<string> idsOfMovies = GetIdsForMoviesInApi_MostPopular().Result;
             var users = new List<MovieQuickShowcaseViewModel>();
-            var batchSize = 5;
+            var batchSize = AmountOfMoviesToPull == 1 ? 1 : 5;
             int numberOfBatches = AmountOfMoviesToPull / batchSize;
 
             for (int i = 0; i < numberOfBatches; i++)

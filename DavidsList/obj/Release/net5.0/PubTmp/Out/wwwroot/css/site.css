@@ -1,45 +1,26 @@
-﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-for details on configuring this project to bundle and minify static web assets. */
+﻿
 body {
     background-image: url("/images/Curtain-PNG-Pic-Background.png");
     background-repeat: no-repeat;
-    background-size:cover;
-    background-attachment:fixed;
+    background-size: cover;
+    background-attachment: fixed;
     background-color: black;
     color: white
 }
 
-a.navbar-brand {
-    white-space: normal;
-    text-align: center;
-    word-break: break-all;
-}
+
 header {
     opacity: 90%;
-    position:sticky;
-    top:0;
-    
+    position: sticky;
+    top: 0;
 }
 
-/* Provide sufficient contrast against white background */
-a {
-    color: #0366d6;
-}
-
-.btn-primary {
-    color: #fff;
-    background-color: #1b6ec2;
-    border-color: #1861ac;
-}
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
     color: #fff;
-    /*background-color: #1b6ec2;*/
     border-color: #1861ac;
 }
 
-/* Sticky footer styles
--------------------------------------------------- */
 html {
     font-size: 14px;
 }
@@ -67,15 +48,12 @@ button.accept-policy {
     line-height: inherit;
 }
 
-/* Sticky footer styles
--------------------------------------------------- */
 html {
     position: relative;
     min-height: 100%;
 }
 
 body {
-    /* Margin bottom by footer height */
     margin-bottom: 60px;
 }
 
@@ -84,9 +62,9 @@ body {
     bottom: 0;
     width: 100%;
     white-space: nowrap;
-    background-color:black;
+    background-color: black;
     opacity: 80%;
-    line-height: 60px; /* Vertically center the text there */
+    line-height: 60px;
 }
 
 .thumbnailPic {
@@ -99,14 +77,31 @@ body {
     width: 30%;
 }
 
-.logo {
-    width: 20%;
+.searchBar {
+    margin: auto;
+    width: 50%;
+    padding: 10px;
+}
+
+.searchBarInput {
+    width: 250px;
+    height: 40px;
+    border-radius: 12px;
+    border: 2px solid gray;
+    text-align:center;
+}
+
+.searchBarButton {
+     border: 2px solid gray;
+     background-color:red;
+     width:75px;
+     height:40px
 }
 
 .list {
     list-style: none;
-    margin:0px;
-    padding:0px;
+    margin: 0px;
+    padding: 0px;
 }
 
     .list li {
@@ -133,5 +128,3 @@ body {
         height: 25px;
         margin-right: 20px;
     }
-
-    

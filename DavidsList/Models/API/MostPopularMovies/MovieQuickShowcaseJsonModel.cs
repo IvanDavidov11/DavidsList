@@ -1,4 +1,4 @@
-﻿namespace DavidsList.Models.API
+﻿namespace DavidsList.Models.API.MostPopularMovies
 {
     using Newtonsoft.Json;
     public class MovieQuickShowcaseJsonModel

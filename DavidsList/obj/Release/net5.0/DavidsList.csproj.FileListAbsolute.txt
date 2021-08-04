@@ -445,3 +445,4 @@ C:\Users\andic\source\repos\DavidsList\DavidsList\obj\Release\net5.0\DavidsList.
 C:\Users\andic\source\repos\DavidsList\DavidsList\obj\Release\net5.0\ref\DavidsList.dll
 C:\Users\andic\source\repos\DavidsList\DavidsList\obj\Release\net5.0\DavidsList.pdb
 C:\Users\andic\source\repos\DavidsList\DavidsList\obj\Release\net5.0\DavidsList.genruntimeconfig.cache
+C:\Users\andic\source\repos\DavidsList\DavidsList\obj\Release\net5.0\Razor\Views\Search\Result.cshtml.g.cs

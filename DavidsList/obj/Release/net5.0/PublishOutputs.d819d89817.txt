@@ -46,6 +46,7 @@ C:\Users\andic\source\repos\DavidsList\DavidsList\obj\Release\net5.0\PubTmp\Out\
 C:\Users\andic\source\repos\DavidsList\DavidsList\obj\Release\net5.0\PubTmp\Out\wwwroot\lib\jquery\dist\jquery.min.js
 C:\Users\andic\source\repos\DavidsList\DavidsList\obj\Release\net5.0\PubTmp\Out\wwwroot\lib\jquery\dist\jquery.min.map
 C:\Users\andic\source\repos\DavidsList\DavidsList\obj\Release\net5.0\PubTmp\Out\wwwroot\lib\jquery\LICENSE.txt
+C:\Users\andic\source\repos\DavidsList\DavidsList\obj\Release\net5.0\PubTmp\Out\wwwroot\logo-transparent-resized.png
 C:\Users\andic\source\repos\DavidsList\DavidsList\obj\Release\net5.0\PubTmp\Out\wwwroot\logo-transparent.png
 C:\Users\andic\source\repos\DavidsList\DavidsList\obj\Release\net5.0\PubTmp\Out\appsettings.Development.json
 C:\Users\andic\source\repos\DavidsList\DavidsList\obj\Release\net5.0\PubTmp\Out\appsettings.json

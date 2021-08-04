@@ -1,4 +1,4 @@
-﻿namespace DavidsList.Models.API
+﻿namespace DavidsList.Models.API.TopRatedMovies
 {
     public class TopRatedMoviesApiModel
     {
