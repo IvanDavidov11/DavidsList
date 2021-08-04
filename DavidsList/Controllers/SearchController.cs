@@ -5,6 +5,11 @@
     public class SearchController : Controller
 
     {
+        public IActionResult Result (string query)
+        {
+            return View();
+        }
+
 
     }
 }

@@ -21,6 +21,4 @@
         public int width { get; set; }
     }
 
-
-
 }

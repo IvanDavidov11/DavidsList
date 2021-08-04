@@ -1,13 +1,12 @@
 ﻿namespace DavidsList.Controllers
 {
+    using System.Linq;
     using DavidsList.Data;
+    using System.Threading.Tasks;
     using DavidsList.Data.DbModels;
+    using Microsoft.AspNetCore.Mvc;
     using DavidsList.Models.FormModels;
     using Microsoft.AspNetCore.Identity;
-    using Microsoft.AspNetCore.Mvc;
-    using Microsoft.EntityFrameworkCore;
-    using System.Linq;
-    using System.Threading.Tasks;
 
     public class UserController : Controller
     {

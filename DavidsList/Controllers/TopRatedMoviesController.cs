@@ -13,7 +13,7 @@
         }
         public IActionResult Index()
         {
-            var model = this.ApiConnector.GetTopRatedMovieShowcaseViewModel();
+            var model = this.ApiConnector.GetMoviesInParallel_MostRated().Result;
             return View(model);
         }
     }
