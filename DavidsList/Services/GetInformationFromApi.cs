@@ -9,6 +9,7 @@
     using static Data.DataConstants;
     using System.Collections.Generic;
     using DavidsList.Models.ViewModels;
+    using DavidsList.Models.API.SearchResults;
     using System.Threading;
 
     public class GetInformationFromApi : IGetInformationFromApi
@@ -44,30 +45,30 @@
         }
         private async Task<MovieQuickShowcaseViewModelWithRaiting> GetMovie_MostRated(string movieId, double raiting)
         {
-                var request = new HttpRequestMessage
-                {
-                    Method = HttpMethod.Get,
-                    RequestUri = new Uri($"https://imdb8.p.rapidapi.com/title/get-details?tconst={movieId}"),
-                    Headers =
+            var request = new HttpRequestMessage
+            {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri($"https://imdb8.p.rapidapi.com/title/get-details?tconst={movieId}"),
+                Headers =
                         {
                             { "x-rapidapi-key", IMDbApiKey },
                             { "x-rapidapi-host", IMDbApiHost },
                         },
-                };
-                using (var response = await client.SendAsync(request))
+            };
+            using (var response = await client.SendAsync(request))
+            {
+                response.EnsureSuccessStatusCode();
+                var body = await response.Content.ReadAsStringAsync();
+                var bodyJson = JsonConvert.DeserializeObject<MovieQuickShowcaseJsonModel>(body);
+                return (new MovieQuickShowcaseViewModelWithRaiting
                 {
-                    response.EnsureSuccessStatusCode();
-                    var body = await response.Content.ReadAsStringAsync();
-                    var bodyJson = JsonConvert.DeserializeObject<MovieQuickShowcaseJsonModel>(body);
-                    return (new MovieQuickShowcaseViewModelWithRaiting
-                    {
-                        Title = bodyJson.title,
-                        ImgUrl = bodyJson.image.url,
-                        Year = bodyJson.year,
-                        MoviePath = CleanUpMoviePath(bodyJson.id),
-                        Raiting = raiting,
-                    });
-                }
+                    Title = bodyJson.title,
+                    ImgUrl = bodyJson.image.url,
+                    Year = bodyJson.year,
+                    MoviePath = CleanUpMoviePath(bodyJson.id),
+                    Raiting = raiting,
+                });
+            }
         }
         public async Task<IEnumerable<MovieQuickShowcaseViewModelWithRaiting>> GetMoviesInParallel_MostRated()
         {
@@ -178,6 +179,7 @@
                 var bodyJson = JsonConvert.DeserializeObject<MovieDetailsApiModel>(body);
 
                 string longPlot = bodyJson.plotSummary != null ? bodyJson.plotSummary.text : "This movie has no summary of its plot...";
+                string shortPlot = bodyJson.plotOutline != null ? bodyJson.plotOutline.text : "This movie has no plot outline...";
 
                 return new MovieDetailsViewModel
                 {
@@ -189,9 +191,52 @@
                     Raiting = bodyJson.ratings.rating,
                     RaitingCount = bodyJson.ratings.ratingCount,
                     Genres = bodyJson.genres,
-                    ShortPlot = bodyJson.plotOutline.text,
+                    ShortPlot = shortPlot,
                     LongPlot = longPlot,
                 };
+            }
+        }
+
+
+        public async Task<List<SearchResultsViewModel>> GetSearchResultModel(string query)
+        {
+            var request = new HttpRequestMessage
+            {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri($"https://imdb8.p.rapidapi.com/title/find?q={query}"),
+                Headers =
+                 {
+                     { "x-rapidapi-key", IMDbApiKey },
+                     { "x-rapidapi-host", IMDbApiHost },
+                 },
+            };
+            using (var response = await client.SendAsync(request))
+            {
+                var model = new List<SearchResultsViewModel>();
+                response.EnsureSuccessStatusCode();
+                var body = await response.Content.ReadAsStringAsync();
+                var bodyJson = JsonConvert.DeserializeObject<SearchResultsApiModel>(body).results;
+                foreach (var curMovieResult in bodyJson)
+                {
+                    try
+                    {
+                        if (!curMovieResult.id.Contains("/name"))
+                        {
+                            model.Add(new SearchResultsViewModel
+                            {
+                                ImgUrl = curMovieResult.image.url,
+                                MoviePath = CleanUpMoviePath(curMovieResult.id),
+                                Title = curMovieResult.title,
+                                Year = curMovieResult.year,
+                            });
+                        }
+                    }
+                    catch
+                    {
+                        continue;
+                    }
+                }
+                return model;
             }
         }
 

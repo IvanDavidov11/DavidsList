@@ -9,6 +9,7 @@
         Task<MovieDetailsViewModel> GetSpecificMovieDetails(string moviePath);
         Task<IEnumerable<MovieQuickShowcaseViewModel>> GetMoviesInParallel_MostPopular();
         Task<IEnumerable<MovieQuickShowcaseViewModelWithRaiting>> GetMoviesInParallel_MostRated();
+        Task<List<SearchResultsViewModel>> GetSearchResultModel(string query);
         string CleanUpMoviePath(string path);
 
     }
