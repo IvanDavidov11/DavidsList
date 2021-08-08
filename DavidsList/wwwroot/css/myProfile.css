@@ -1,0 +1,57 @@
+﻿.introduction {
+    background-color: white;
+    border-block: solid #616970;
+    width: 500px;
+    padding-left: 5px;
+    height: 140px;
+    color: #616970;
+    font-size: 20px;
+    text-align: start;
+    margin: 0 10px 0px 10px;
+    resize: none;
+}
+
+.myProfile {
+    list-style: none;
+}
+    .myProfile li {
+        border-block: solid 4px #616970;
+        background-color: white;
+        margin-bottom: 30px;
+        border-radius: 10px;
+    }
+    .myProfile h3 {
+        padding: 10px 0px 0px 10px;
+        color: black;
+        font-size: 1.2em;
+    }
+    .myProfile a {
+        color: #616970;
+    }
+    .myProfile .none{
+        border-block:none;
+        background-color:black;
+        margin-bottom:30px;
+        border-radius:0px;
+    }
+
+.wrapper {
+    display: flex;
+    width: 100%;
+    align-items: stretch;
+}
+
+.centerDiv{
+    text-align:center;
+    padding-bottom:5px;
+}
+
+.profilePicture {
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    border: solid 5px #616970;
+}
+.picInput {
+    width:260px
+}

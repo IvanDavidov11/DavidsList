@@ -1,10 +1,8 @@
 ﻿
-.wrapper {
-    display: flex;
-    width: 100%;
-    align-items: stretch;
-}
 
+.sidebar-box{
+    margin-right:100px;
+}
 #sidebar.active {
     margin-left: -250px;
 }
@@ -53,4 +51,9 @@ a {
     position: absolute;
     top: 50%;
     right: 20px;
+}
+
+.list-unstyled-dropdown {
+    padding-left: 20px;
+    list-style:none;
 }

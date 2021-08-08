@@ -5,9 +5,13 @@ body {
     background-size: cover;
     background-attachment: fixed;
     background-color: black;
-    color: white
+    font-family: sans-serif;
+    color: white;
+    font-family: 'Kreon', serif;
 }
 
+button {
+}
 
 header {
     opacity: 90%;
@@ -88,14 +92,14 @@ body {
     height: 40px;
     border-radius: 12px;
     border: 2px solid gray;
-    text-align:center;
+    text-align: center;
 }
 
 .searchBarButton {
-     border: 2px solid gray;
-     background-color:red;
-     width:75px;
-     height:40px
+    border: 2px solid gray;
+    background-color: red;
+    width: 75px;
+    height: 40px
 }
 
 .list {

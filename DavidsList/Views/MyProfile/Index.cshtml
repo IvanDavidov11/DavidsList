@@ -1,9 +1,48 @@
 ﻿<div class="wrapper">
-    <partial name="_MyAccountSidebarPartial"/>
-
+    <div class="sidebar-box">
+        <partial name="_MyAccountSidebarPartial" />
+    </div>
 
     <div id="content">
+        <ul class="myProfile">
+            <li class="none">
+                <h2 style="text-align:center">Profile Picture:</h2>
+                <div class="centerDiv">
+                    <img class="profilePicture" src="@Model.ImageUrl" />
+                </div>
+                <div class="centerDiv">
+                    <form action="/MyProfile" method="post">
+                        <input name="url" id="url" class="picInput" placeholder="Image URL (square images work best)" />
+                        <button type="submit">
+                            <i>Change Profile Picture</i>
+                        </button>
+                    </form>
+                    <span class="text-danger">@Html.ValidationMessage("invalidUrl")</span>
+                </div>
+            </li>
 
+            <li>
+                <h3><b>Username: </b><a>@User.Identity.Name</a> </h3>
 
+            </li>
+            <li>
+                <h3><b>E-mail: </b><a>@Model.Email</a></h3>
+            </li>
+            <li class="introHolder">
+                <h3><b>Introduction:</b></h3>
+                <div>
+                    <form action="/MyProfile" method="post">
+                        <textarea class="introduction" placeholder="Write a quick introduction here..." id="intrd" name="intrd">@Model.Introduction</textarea>
+                        <div class="centerDiv">
+                            <button id="intrd" name="intrd" type="submit">
+                                <i>Change Introduction</i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+            </li>
+
+        </ul>
     </div>
 </div>
