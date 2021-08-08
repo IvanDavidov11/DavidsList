@@ -8,12 +8,18 @@ Functionality so far:
 4. Register page with functioning registration. (WIP)
 5. Login page with basic authentication functionality. (WIP)
 6. Search bar functionality that allows users to find information on any movie.
+7. My profile page.
+ 7.1 View your profile's pfp, username, email and introduction.
+ 7.2 Change your profile's pfp and introduction (WIP)
 
 TODO:
 1. Improve User authentication and registration.
-2. Optimize page loading time by using multi-threading.
-3. Add Movie Details Page stylizing.
+2. Look into further optimization in page loading times by using multi-threading.
+3. Add additional Movie Details Page stylizing and functionality.
 4. Implement button functionality.
 6. Create random movie generator engine.
-7. Fix various design issues.
-8. Create Account Details page.
+7. Flesh out designs for all pages.
+8. Account details page.
+ 8.1 Add Update account details page.
+ 8.2 Add Preferances page.
+ 8.3 Add Movie history page.
