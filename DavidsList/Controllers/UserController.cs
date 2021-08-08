@@ -23,6 +23,12 @@
 
         public IActionResult Register()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+
+            }
+
             return View();
         }
 
@@ -30,6 +36,7 @@
         
         public async Task<IActionResult> Register(RegisterFormModel model)
         {
+            
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -79,6 +86,11 @@
 
         public IActionResult Login()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+
+            }
             return View();
         }
 

@@ -447,3 +447,4 @@ C:\Users\andic\source\repos\DavidsList\DavidsList\obj\Debug\net5.0\DavidsList.pd
 C:\Users\andic\source\repos\DavidsList\DavidsList\obj\Debug\net5.0\DavidsList.genruntimeconfig.cache
 C:\Users\andic\source\repos\DavidsList\DavidsList\obj\Debug\net5.0\Razor\Views\Search\Result.cshtml.g.cs
 C:\Users\andic\source\repos\DavidsList\DavidsList\obj\Debug\net5.0\Razor\Views\MyProfile\Index.cshtml.g.cs
+C:\Users\andic\source\repos\DavidsList\DavidsList\obj\Debug\net5.0\Razor\Views\Shared\_MyAccountSidebarPartial.cshtml.g.cs
