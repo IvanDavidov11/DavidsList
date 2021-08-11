@@ -41,6 +41,10 @@ namespace DavidsList
             services.AddControllersWithViews();
             services.AddTransient<IGetInformationFromApi, GetInformationFromApi>();
             services.AddNotyf(config => { config.DurationInSeconds = 10; config.IsDismissable = true; config.Position = NotyfPosition.BottomRight; });
+            services.AddHttpContextAccessor();
+            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IMarkMovieService, MarkMovieService>();
+
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

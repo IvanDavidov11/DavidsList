@@ -19,6 +19,8 @@
         public DbSet<LikedMovie> LikedMovies { get; init; }
         public DbSet<FavouritedMovie> FavouritedMovies { get; init; }
         public DbSet<DislikedMovie> DislikedMovies { get; init; }
+        public DbSet<FlaggedMovie> FlaggedMovies { get; init; }
+
 
 
 
@@ -63,8 +65,15 @@
                 ent.Property(e => e.UserId).HasColumnName("UserId");
                 ent.Property(e => e.MovieId).HasColumnName("MovieId");
             });
+            builder.Entity<FlaggedMovie>(ent =>
+            {
+                ent.HasKey(e => new { e.UserId, e.MovieId });
 
-           
+                ent.Property(e => e.UserId).HasColumnName("UserId");
+                ent.Property(e => e.MovieId).HasColumnName("MovieId");
+            });
+
+
 
             base.OnModelCreating(builder);
         }

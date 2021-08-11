@@ -13,10 +13,10 @@
             </a>
             <h1>@movie.Title</h1>
             <h3>Relase Date: @movie.Year</h3>
-            <partial name="_ButtonsPartial" model="@movie.MoviePath" />
+            <partial name="_ButtonsPartial" model="@movie" />
         </div>
     </li>
-    @*<li>
+    <li>
         <div class="regular">
             <a href="MovieDetails/@movie.MoviePath">
                 <img class="thumbnailPic" src="@movie.ImgUrl">
@@ -35,6 +35,6 @@
             <h3>Relase Date: @movie.Year</h3>
             <partial name="_ButtonsPartial" model="@movie.MoviePath" />
         </div>
-    </li>*@
+    </li>
     }
 </ol>

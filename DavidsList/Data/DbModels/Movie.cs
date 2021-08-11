@@ -6,7 +6,6 @@
     public class Movie
     {
         [Key]
-        [Required]
         public string Id { get; init; }
 
         [Required]

@@ -13,13 +13,19 @@
     using DavidsList.Models.API.TopRatedMovies;
     using DavidsList.Models.API.MostPopularMovies;
     using DavidsList.Models.MovieDetails;
+    using Microsoft.EntityFrameworkCore;
+    using DavidsList.Data;
 
     public class GetInformationFromApi : IGetInformationFromApi
     {
         private static HttpClient client = new HttpClient();
-        public GetInformationFromApi()
-        {
+        private readonly DavidsListDbContext data;
+        private readonly IUserService user;
 
+        public GetInformationFromApi(DavidsListDbContext db, IUserService userService)
+        {
+            this.data = db;
+            this.user = userService;
         }
 
         private async Task<List<TopRatedMoviesApiModel>> GetIdsForMoviesInApi_MostRated()
@@ -47,6 +53,8 @@
         }
         private async Task<MovieQuickShowcaseViewModelWithRaiting> GetMovie_MostRated(string movieId, double raiting)
         {
+            var curUser = GetUserFromService();
+
             var request = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
@@ -69,6 +77,12 @@
                     Year = bodyJson.year,
                     MoviePath = CleanUpMoviePath(bodyJson.id),
                     Raiting = raiting,
+                    IsSeen = curUser.SeenMovies.FirstOrDefault(x => x.Movie.MoviePath == movieId) == null ? false : true,
+                    IsLiked = curUser.LikedMovies.FirstOrDefault(x => x.Movie.MoviePath == movieId) == null ? false : true,
+                    IsDisliked = curUser.DislikedMovies.FirstOrDefault(x => x.Movie.MoviePath == movieId) == null ? false : true,
+                    IsFavourited = curUser.FavouritedMovies.FirstOrDefault(x => x.Movie.MoviePath == movieId) == null ? false : true,
+                    IsFlagged = curUser.FlaggedMovies.FirstOrDefault(x => x.Movie.MoviePath == movieId) == null ? false : true,
+
                 });
             }
         }
@@ -121,6 +135,7 @@
         }
         private async Task<MovieQuickShowcaseViewModel> GetMovie_MostPopular(string movieId)
         {
+            var curUser = GetUserFromService();
 
             var request = new HttpRequestMessage
             {
@@ -143,6 +158,11 @@
                     ImgUrl = bodyJson.image.url,
                     Year = bodyJson.year,
                     MoviePath = CleanUpMoviePath(bodyJson.id),
+                    IsSeen = curUser.SeenMovies.FirstOrDefault(x => x.Movie.MoviePath == movieId) == null ? false : true,
+                    IsLiked = curUser.LikedMovies.FirstOrDefault(x => x.Movie.MoviePath == movieId) == null ? false : true,
+                    IsDisliked = curUser.DislikedMovies.FirstOrDefault(x => x.Movie.MoviePath == movieId) == null ? false : true,
+                    IsFavourited = curUser.FavouritedMovies.FirstOrDefault(x => x.Movie.MoviePath == movieId) == null ? false : true,
+                    IsFlagged = curUser.FlaggedMovies.FirstOrDefault(x => x.Movie.MoviePath == movieId) == null ? false : true,
                 });
             }
         }
@@ -166,6 +186,8 @@
 
         public async Task<MovieDetailsViewModel> GetSpecificMovieDetails(string moviePath)
         {
+            var curUser = GetUserFromService();
+
             var request = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
@@ -182,8 +204,6 @@
                 var body = await response.Content.ReadAsStringAsync();
                 var bodyJson = JsonConvert.DeserializeObject<MovieDetailsApiModel>(body);
 
-                string longPlot = bodyJson.plotSummary != null ? bodyJson.plotSummary.text : "This movie has no summary of its plot...";
-                string shortPlot = bodyJson.plotOutline != null ? bodyJson.plotOutline.text : "This movie has no plot outline...";
 
                 return new MovieDetailsViewModel
                 {
@@ -195,8 +215,13 @@
                     Raiting = bodyJson.ratings.rating,
                     RaitingCount = bodyJson.ratings.ratingCount,
                     Genres = bodyJson.genres,
-                    ShortPlot = shortPlot,
-                    LongPlot = longPlot,
+                    ShortPlot = bodyJson.plotOutline != null ? bodyJson.plotOutline.text : "This movie has no plot outline...",
+                    LongPlot = bodyJson.plotSummary != null ? bodyJson.plotSummary.text : "This movie has no summary of its plot...",
+                    IsSeen = curUser.SeenMovies.FirstOrDefault(x => x.Movie.MoviePath == moviePath) == null ? false : true,
+                    IsLiked = curUser.LikedMovies.FirstOrDefault(x => x.Movie.MoviePath == moviePath) == null ? false : true,
+                    IsDisliked = curUser.DislikedMovies.FirstOrDefault(x => x.Movie.MoviePath == moviePath) == null ? false : true,
+                    IsFavourited = curUser.FavouritedMovies.FirstOrDefault(x => x.Movie.MoviePath == moviePath) == null ? false : true,
+                    IsFlagged = curUser.FlaggedMovies.FirstOrDefault(x => x.Movie.MoviePath == moviePath) == null ? false : true,
                 };
             }
         }
@@ -204,6 +229,8 @@
 
         public async Task<List<SearchResultsViewModel>> GetSearchResultModel(string query)
         {
+            var curUser = GetUserFromService();
+
             var request = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
@@ -226,12 +253,18 @@
                     {
                         if (!curMovieResult.id.Contains("/name"))
                         {
+                            var moviePath = CleanUpMoviePath(curMovieResult.id);
                             model.Add(new SearchResultsViewModel
                             {
                                 ImgUrl = curMovieResult.image.url,
-                                MoviePath = CleanUpMoviePath(curMovieResult.id),
+                                MoviePath = moviePath,
                                 Title = curMovieResult.title,
                                 Year = curMovieResult.year,
+                                IsSeen = curUser.SeenMovies.FirstOrDefault(x => x.Movie.MoviePath == moviePath) == null ? false : true,
+                                IsLiked = curUser.LikedMovies.FirstOrDefault(x => x.Movie.MoviePath == moviePath) == null ? false : true,
+                                IsDisliked = curUser.DislikedMovies.FirstOrDefault(x => x.Movie.MoviePath == moviePath) == null ? false : true,
+                                IsFavourited = curUser.FavouritedMovies.FirstOrDefault(x => x.Movie.MoviePath == moviePath) == null ? false : true,
+                                IsFlagged = curUser.FlaggedMovies.FirstOrDefault(x => x.Movie.MoviePath == moviePath) == null ? false : true,
                             });
                         }
                     }
@@ -242,6 +275,26 @@
                 }
                 return model;
             }
+        }
+
+        private Data.DbModels.User GetUserFromService()
+        {
+            var uName = user.GetUser().Identity.Name;
+            var curUser = data.Users
+                .Include(x => x.UserGenres)
+                .ThenInclude(x=>x.Genre)
+                .Include(x => x.FavouritedMovies)
+                .ThenInclude(x => x.Movie)
+                .Include(x => x.FlaggedMovies)
+                .ThenInclude(x => x.Movie)
+                .Include(x => x.LikedMovies)
+                .ThenInclude(x => x.Movie)
+                .Include(x => x.SeenMovies)
+                .ThenInclude(x => x.Movie)
+                .Include(x => x.DislikedMovies)
+                .ThenInclude(x => x.Movie)
+                .FirstOrDefault(x => x.UserName == uName);
+            return curUser;
         }
 
         public string CleanUpMoviePath(string path)

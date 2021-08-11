@@ -1,4 +1,4 @@
-﻿namespace DavidsList.Data.DbModels
+﻿namespace DavidsList.Data.DbModels.ManyToManyTables
 {
     using DavidsList.Data.DbModels;
     using System.ComponentModel.DataAnnotations;
