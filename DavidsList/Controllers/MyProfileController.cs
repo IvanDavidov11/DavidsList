@@ -1,5 +1,6 @@
 ﻿namespace DavidsList.Controllers
 {
+    using AspNetCoreHero.ToastNotification.Abstractions;
     using DavidsList.Data;
     using DavidsList.Data.DbModels;
     using DavidsList.Models.ViewModels;
@@ -12,11 +13,15 @@
     {
         private readonly UserManager<User> userManager;
         private readonly DavidsListDbContext data;
+        private readonly INotyfService _notyf;
 
-        public MyProfileController(UserManager<User> userManager, DavidsListDbContext db)
+
+        public MyProfileController(UserManager<User> userManager, DavidsListDbContext db, INotyfService notyf)
         {
             this.userManager = userManager;
             this.data = db;
+            _notyf = notyf;
+
 
         }
         public IActionResult Index()
@@ -47,11 +52,15 @@
             if (intrd != null)
             {
                 data.Users.FirstOrDefault(x => x.UserName == User.Identity.Name).Introduction = intrd;
+                _notyf.Success("Successfuly changed profile introdcution...");
+
             }
 
             if (url != null && Uri.IsWellFormedUriString(url, UriKind.Absolute))
             {
                 data.Users.FirstOrDefault(x => x.UserName == User.Identity.Name).ProfilePictureUrl = url;
+                _notyf.Success("Successfuly changed profile picture...");
+
             }
 
             else if (url != null)

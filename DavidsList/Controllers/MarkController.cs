@@ -6,12 +6,10 @@
 
     public class MarkController : Controller
     {
-        private readonly DavidsListDbContext data;
         private readonly IMarkMovieService marker;
 
-        public MarkController(DavidsListDbContext db, IMarkMovieService mark)
+        public MarkController(IMarkMovieService mark)
         {
-            this.data = db;
             this.marker = mark;
         }
         public IActionResult Like(string id)

@@ -1,11 +1,7 @@
-﻿@if (!Model.IsSeen)
-{
-    <a title="I have seen this movie!" href="/Mark/Seen?id=@Model.MoviePath.ToString()"><img src="~/Icons/seen.png" /></a>
-}
-@if (!Model.IsLiked)
-{
-    <a title="I like this movie!" href="/Mark/Like?id=@Model.MoviePath.ToString()"><img src="~/Icons/Add.png" /></a>
-}
+﻿
+<a title="I have seen this movie!" href="/Mark/Seen?id=@Model.MoviePath.ToString()"><img src="~/Icons/seen.png" /></a>
+
+<a title="I like this movie!" href="/Mark/Like?id=@Model.MoviePath.ToString()"><img src="~/Icons/Add.png" /></a>
 
 <a title="I dislike this movie!" href="/Mark/Dislike?id=@Model.MoviePath.ToString()"><img src="~/Icons/remove.png" /></a>
 

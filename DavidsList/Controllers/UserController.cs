@@ -7,18 +7,23 @@
     using Microsoft.AspNetCore.Mvc;
     using DavidsList.Models.FormModels;
     using Microsoft.AspNetCore.Identity;
+    using AspNetCoreHero.ToastNotification.Abstractions;
+    using static Data.DataConstants;
 
     public class UserController : Controller
     {
         private readonly UserManager<User> userManager;
         private readonly SignInManager<User> signInManager;
         private readonly DavidsListDbContext data;
+        private readonly INotyfService _notyf;
 
-        public UserController(UserManager<User> userManager, SignInManager<User> signInManager, DavidsListDbContext db)
+
+        public UserController(UserManager<User> userManager, SignInManager<User> signInManager, DavidsListDbContext db, INotyfService notyf)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.data = db;
+            _notyf = notyf;
         }
 
         public IActionResult Register()
@@ -64,7 +69,7 @@
                 }
                 return View(model);
             }
-
+            _notyf.Success("Registered successfuly, redirecting to Login page.");
             return RedirectToAction("Login", "User");
         }
 
@@ -89,7 +94,6 @@
             if (User.Identity.IsAuthenticated)
             {
                 return RedirectToAction("Index", "Home");
-
             }
             return View();
         }
@@ -118,6 +122,7 @@
             }
 
             await this.signInManager.SignInAsync(loggedUser,true);
+            _notyf.Success("Logged-in successfuly, redirecting to Home page.");
             return RedirectToAction("Index", "Home");
         }
 

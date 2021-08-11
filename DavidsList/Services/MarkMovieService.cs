@@ -7,15 +7,19 @@
     using Microsoft.EntityFrameworkCore;
     using DavidsList.Services.Interfaces;
     using DavidsList.Data.DbModels.ManyToManyTables;
-
+    using AspNetCoreHero.ToastNotification.Abstractions;
 
     public class MarkMovieService : IMarkMovieService
     {
         private readonly DavidsListDbContext data;
+        private readonly INotyfService _notyf;
 
-        public MarkMovieService(DavidsListDbContext db)
+
+        public MarkMovieService(DavidsListDbContext db, INotyfService notyf)
         {
             this.data = db;
+            _notyf = notyf;
+
         }
 
         public void MarkMovieAsDisliked(string movieId, string userName)
@@ -27,12 +31,14 @@
             if (CheckIfMovieIsAlready_Liked(curUser, movie))
             {
                 RemoveLikedMovie(curUser, movie);
+                _notyf.Success("Successfuly removed Like from movie...");
+
             }
 
             if (CheckIfMovieIsAlready_Disliked(curUser, movie))
             {
                 RemoveDislikedMovie(curUser, movie);
-                /////////////////////////////////////////////TODO notif
+                _notyf.Success("Successfuly removed Dislike from movie...");
             }
             else
             {
@@ -41,6 +47,7 @@
                     MovieId = movie.Id,
                     UserId = curUser.Id
                 });
+                _notyf.Success("Successfuly marked movie as Disliked...");
             }
             data.SaveChanges();
         }
@@ -54,6 +61,8 @@
             if (CheckIfMovieIsAlready_Favourited(curUser, movie))
             {
                 RemoveFavouritedMovie(curUser, movie);
+                _notyf.Success("Successfuly removed movie from Favourites...");
+
             }
             else
             {
@@ -62,6 +71,8 @@
                     MovieId = movie.Id,
                     UserId = curUser.Id
                 });
+                _notyf.Success("Successfuly marked movie as Favourite...");
+
             }
             data.SaveChanges();
         }
@@ -75,6 +86,8 @@
             if (CheckIfMovieIsAlready_Flagged(curUser, movie))
             {
                 RemoveFlaggedMovie(curUser, movie);
+                _notyf.Success("Successfuly removed Flagg from movie...");
+
             }
             else
             {
@@ -83,6 +96,7 @@
                     MovieId = movie.Id,
                     UserId = curUser.Id
                 });
+                _notyf.Success("Successfuly marked movie as Flagged...");
             }
             data.SaveChanges();
         }
@@ -96,12 +110,13 @@
             if (CheckIfMovieIsAlready_Disliked(curUser, movie))
             {
                 RemoveDislikedMovie(curUser, movie);
+                _notyf.Success("Successfuly removed Dislike from movie...");
             }
 
             if (CheckIfMovieIsAlready_Liked(curUser, movie))
             {
                 RemoveLikedMovie(curUser, movie);
-                /////////////////////////////////////////////TODO notif
+                _notyf.Success("Successfuly removed Like from movie...");
             }
             else
             {
@@ -110,6 +125,8 @@
                     MovieId = movie.Id,
                     UserId = curUser.Id
                 });
+                _notyf.Success("Successfuly marked movie as Liked...");
+
             }
             data.SaveChanges();
         }
@@ -123,6 +140,8 @@
             if (CheckIfMovieIsAlready_Seen(curUser, movie))
             {
                 RemoveSeenMovie(curUser, movie);
+                _notyf.Success("Successfuly removed Seen from movie...");
+
             }
             else
             {
@@ -131,6 +150,8 @@
                     MovieId = movie.Id,
                     UserId = curUser.Id
                 });
+                _notyf.Success("Successfuly marked movie as Seen...");
+
             }
             data.SaveChanges();
         }

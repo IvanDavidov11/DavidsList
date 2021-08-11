@@ -35,12 +35,13 @@ namespace DavidsList
                     options.Password.RequireNonAlphanumeric = false;
                     options.Password.RequireUppercase = false;
                     options.Password.RequireLowercase = false;
+                    options.Password.RequiredLength = 5;
 
                 })
                 .AddEntityFrameworkStores<DavidsListDbContext>();
             services.AddControllersWithViews();
             services.AddTransient<IGetInformationFromApi, GetInformationFromApi>();
-            services.AddNotyf(config => { config.DurationInSeconds = 10; config.IsDismissable = true; config.Position = NotyfPosition.BottomRight; });
+            services.AddNotyf(config => { config.DurationInSeconds = 8; config.IsDismissable = true; config.Position = NotyfPosition.TopRight; });
             services.AddHttpContextAccessor();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IMarkMovieService, MarkMovieService>();
