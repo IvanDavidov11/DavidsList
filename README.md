@@ -11,12 +11,14 @@ Functionality so far:
 7. My profile page.
  7.1 View your profile's pfp, username, email and introduction.
  7.2 Change your profile's pfp and introduction (WIP)
+8. Marking movies as Favourite, Seen, Flagged, Liked, Disliked. (WIP)
+9. Notifications providing confirmation on successful actions.
 
 TODO:
 1. Improve User authentication and registration.
-2. Look into further optimization in page loading times by using multi-threading.
+2. Look into further optimization in page loading times.
 3. Add additional Movie Details Page stylizing and functionality.
-4. Implement button functionality.
+4. Implement button stylizing.
 6. Create random movie generator engine.
 7. Flesh out designs for all pages.
 8. Account details page.
