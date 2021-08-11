@@ -448,3 +448,5 @@ C:\Users\andic\source\repos\DavidsList\DavidsList\obj\Debug\net5.0\DavidsList.ge
 C:\Users\andic\source\repos\DavidsList\DavidsList\obj\Debug\net5.0\Razor\Views\Search\Result.cshtml.g.cs
 C:\Users\andic\source\repos\DavidsList\DavidsList\obj\Debug\net5.0\Razor\Views\MyProfile\Index.cshtml.g.cs
 C:\Users\andic\source\repos\DavidsList\DavidsList\obj\Debug\net5.0\Razor\Views\Shared\_MyAccountSidebarPartial.cshtml.g.cs
+C:\Users\andic\source\repos\DavidsList\DavidsList\bin\Debug\net5.0\AspNetCoreHero.ToastNotification.Views.dll
+C:\Users\andic\source\repos\DavidsList\DavidsList\bin\Debug\net5.0\AspNetCoreHero.ToastNotification.dll

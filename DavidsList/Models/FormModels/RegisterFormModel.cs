@@ -6,7 +6,7 @@
     public class RegisterFormModel
     {
         [Required(ErrorMessage = "This field is required!")]
-        [StringLength(UsernameMaxLength, ErrorMessage ="Username Is too long!", MinimumLength = UsernameMinLength)]
+        [StringLength(UsernameMaxLength, ErrorMessage ="Username not in the correct range. Please try again", MinimumLength = UsernameMinLength)]
         public string Username { get; set; }
         
         [Required(ErrorMessage = "This field is required!")]
@@ -15,7 +15,7 @@
         public string Email { get; set; }
 
         [Required(ErrorMessage = "This field is required!")]
-        [StringLength(PasswordMaxLength, ErrorMessage = "Username Is too long!", MinimumLength = PasswordMinLength)]
+        [StringLength(PasswordMaxLength, ErrorMessage = "Password not in the correct range. Please try again...", MinimumLength = PasswordMinLength)]
 
         public string Password { get; set; }
         

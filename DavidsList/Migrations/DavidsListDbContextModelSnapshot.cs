@@ -26,8 +26,8 @@ namespace DavidsList.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("MovieId")
-                        .HasColumnType("int");
+                    b.Property<string>("MovieId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("TextContent")
                         .IsRequired()
@@ -49,8 +49,8 @@ namespace DavidsList.Migrations
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("UserId");
 
-                    b.Property<int>("MovieId")
-                        .HasColumnType("int")
+                    b.Property<string>("MovieId")
+                        .HasColumnType("nvarchar(450)")
                         .HasColumnName("MovieId");
 
                     b.HasKey("UserId", "MovieId");
@@ -66,8 +66,8 @@ namespace DavidsList.Migrations
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("UserId");
 
-                    b.Property<int>("MovieId")
-                        .HasColumnType("int")
+                    b.Property<string>("MovieId")
+                        .HasColumnType("nvarchar(450)")
                         .HasColumnName("MovieId");
 
                     b.HasKey("UserId", "MovieId");
@@ -103,8 +103,8 @@ namespace DavidsList.Migrations
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("UserId");
 
-                    b.Property<int>("MovieId")
-                        .HasColumnType("int")
+                    b.Property<string>("MovieId")
+                        .HasColumnType("nvarchar(450)")
                         .HasColumnName("MovieId");
 
                     b.HasKey("UserId", "MovieId");
@@ -133,10 +133,8 @@ namespace DavidsList.Migrations
 
             modelBuilder.Entity("DavidsList.Data.DbModels.Movie", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("MoviePath")
                         .IsRequired()
@@ -153,8 +151,8 @@ namespace DavidsList.Migrations
                         .HasColumnType("nvarchar(450)")
                         .HasColumnName("UserId");
 
-                    b.Property<int>("MovieId")
-                        .HasColumnType("int")
+                    b.Property<string>("MovieId")
+                        .HasColumnType("nvarchar(450)")
                         .HasColumnName("MovieId");
 
                     b.HasKey("UserId", "MovieId");
@@ -443,7 +441,7 @@ namespace DavidsList.Migrations
                         .IsRequired();
 
                     b.HasOne("DavidsList.Data.DbModels.User", "User")
-                        .WithMany()
+                        .WithMany("UserGenres")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -526,6 +524,11 @@ namespace DavidsList.Migrations
             modelBuilder.Entity("DavidsList.Data.DbModels.Movie", b =>
                 {
                     b.Navigation("Comments");
+                });
+
+            modelBuilder.Entity("DavidsList.Data.DbModels.User", b =>
+                {
+                    b.Navigation("UserGenres");
                 });
 #pragma warning restore 612, 618
         }

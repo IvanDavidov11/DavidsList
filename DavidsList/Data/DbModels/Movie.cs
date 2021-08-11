@@ -7,7 +7,7 @@
     {
         [Key]
         [Required]
-        public int Id { get; init; }
+        public string Id { get; init; }
 
         [Required]
         public string MoviePath { get; init; }

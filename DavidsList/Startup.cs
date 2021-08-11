@@ -1,5 +1,6 @@
 namespace DavidsList
 {
+    using AspNetCoreHero.ToastNotification;
     using DavidsList.Data;
     using DavidsList.Data.DbModels;
     using DavidsList.Infrastructures;
@@ -33,10 +34,13 @@ namespace DavidsList
                     options.Password.RequireDigit = false;
                     options.Password.RequireNonAlphanumeric = false;
                     options.Password.RequireUppercase = false;
+                    options.Password.RequireLowercase = false;
+
                 })
                 .AddEntityFrameworkStores<DavidsListDbContext>();
             services.AddControllersWithViews();
             services.AddTransient<IGetInformationFromApi, GetInformationFromApi>();
+            services.AddNotyf(config => { config.DurationInSeconds = 10; config.IsDismissable = true; config.Position = NotyfPosition.BottomRight; });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
