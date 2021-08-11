@@ -1,7 +1,7 @@
 ﻿namespace DavidsList.Controllers
 {
-    using DavidsList.Services;
     using Microsoft.AspNetCore.Mvc;
+    using DavidsList.Services.Interfaces;
 
     public class TopRatedMoviesController : Controller
     {

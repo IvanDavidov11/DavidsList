@@ -1,4 +1,4 @@
-﻿namespace DavidsList.Services
+﻿namespace DavidsList.Services.Interfaces
 {
     using System.Security.Claims;
 

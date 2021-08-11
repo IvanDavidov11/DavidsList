@@ -9,6 +9,7 @@
     using static Data.DataConstants;
     using System.Collections.Generic;
     using DavidsList.Models.ViewModels;
+    using DavidsList.Services.Interfaces;
     using DavidsList.Models.API.SearchResults;
     using DavidsList.Models.API.TopRatedMovies;
     using DavidsList.Models.API.MostPopularMovies;

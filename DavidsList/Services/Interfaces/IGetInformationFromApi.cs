@@ -1,6 +1,5 @@
-﻿namespace DavidsList.Services
+﻿namespace DavidsList.Services.Interfaces
 {
-    using DavidsList.Models.API;
     using System.Threading.Tasks;
     using System.Collections.Generic;
     using DavidsList.Models.ViewModels;

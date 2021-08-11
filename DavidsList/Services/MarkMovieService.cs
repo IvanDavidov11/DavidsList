@@ -1,11 +1,12 @@
 ﻿namespace DavidsList.Services
 {
-    using DavidsList.Data;
-    using DavidsList.Data.DbModels;
-    using DavidsList.Data.DbModels.ManyToManyTables;
-    using Microsoft.EntityFrameworkCore;
     using System;
     using System.Linq;
+    using DavidsList.Data;
+    using DavidsList.Data.DbModels;
+    using Microsoft.EntityFrameworkCore;
+    using DavidsList.Services.Interfaces;
+    using DavidsList.Data.DbModels.ManyToManyTables;
 
 
     public class MarkMovieService : IMarkMovieService
@@ -20,99 +21,154 @@
         public void MarkMovieAsDisliked(string movieId, string userName)
         {
             var curUser = data.Users.Include(x => x.DislikedMovies).Include(x => x.LikedMovies).FirstOrDefault(x => x.UserName == userName);
-            if (data.Movies.FirstOrDefault(x => x.MoviePath == movieId) == null)
-            {
-                CreateMovie(movieId);
-            }
+            CreateMovieIfItDoesNotExist(movieId);
             var movie = data.Movies.FirstOrDefault(x => x.MoviePath == movieId);
-            CheckIfMovieIsAlreadyLiked_ForDisliked(curUser, movie);
-            var movieIsDisliked = CheckIfMovieIsAlreadyDisliked_ForDisliked(curUser,movie);
-            if (movieIsDisliked)
+
+            if (CheckIfMovieIsAlready_Liked(curUser, movie))
             {
-                return;
+                RemoveLikedMovie(curUser, movie);
             }
 
-            data.DislikedMovies.Add(new DislikedMovie
+            if (CheckIfMovieIsAlready_Disliked(curUser, movie))
             {
-                MovieId = movie.Id,
-                UserId = curUser.Id
-            });
+                RemoveDislikedMovie(curUser, movie);
+                /////////////////////////////////////////////TODO notif
+            }
+            else
+            {
+                data.DislikedMovies.Add(new DislikedMovie
+                {
+                    MovieId = movie.Id,
+                    UserId = curUser.Id
+                });
+            }
             data.SaveChanges();
         }
 
         public void MarkMovieAsFavourite(string movieId, string userName)
         {
             var curUser = data.Users.Include(x => x.FavouritedMovies).FirstOrDefault(x => x.UserName == userName);
-            if (data.Movies.FirstOrDefault(x => x.MoviePath == movieId) == null)
-            {
-                CreateMovie(movieId);
-            }
+            CreateMovieIfItDoesNotExist(movieId);
             var movie = data.Movies.FirstOrDefault(x => x.MoviePath == movieId);
-            
 
-            data.FavouritedMovies.Add(new FavouritedMovie
+            if (CheckIfMovieIsAlready_Favourited(curUser, movie))
             {
-                MovieId = movie.Id,
-                UserId = curUser.Id
-            });
+                RemoveFavouritedMovie(curUser, movie);
+            }
+            else
+            {
+                data.FavouritedMovies.Add(new FavouritedMovie
+                {
+                    MovieId = movie.Id,
+                    UserId = curUser.Id
+                });
+            }
             data.SaveChanges();
         }
 
         public void MarkMovieAsFlagged(string movieId, string userName)
         {
             var curUser = data.Users.Include(x => x.FlaggedMovies).FirstOrDefault(x => x.UserName == userName);
-            if (data.Movies.FirstOrDefault(x => x.MoviePath == movieId) == null)
-            {
-                CreateMovie(movieId);
-            }
+            CreateMovieIfItDoesNotExist(movieId);
             var movie = data.Movies.FirstOrDefault(x => x.MoviePath == movieId);
 
-            data.FlaggedMovies.Add(new FlaggedMovie
+            if (CheckIfMovieIsAlready_Flagged(curUser, movie))
             {
-                MovieId = movie.Id,
-                UserId = curUser.Id
-            });
+                RemoveFlaggedMovie(curUser, movie);
+            }
+            else
+            {
+                data.FlaggedMovies.Add(new FlaggedMovie
+                {
+                    MovieId = movie.Id,
+                    UserId = curUser.Id
+                });
+            }
             data.SaveChanges();
         }
 
         public void MarkMovieAsLiked(string movieId, string userName)
         {
             var curUser = data.Users.Include(x => x.LikedMovies).Include(x => x.DislikedMovies).FirstOrDefault(x => x.UserName == userName);
-            if (data.Movies.FirstOrDefault(x => x.MoviePath == movieId) == null)
-            {
-                CreateMovie(movieId);
-            }
+            CreateMovieIfItDoesNotExist(movieId);
             var movie = data.Movies.FirstOrDefault(x => x.MoviePath == movieId);
-            CheckIfMovieIsAlreadyDisliked_ForLike(curUser, movie);
-            var movieIsAlreadyLiked = CheckIfMovieIsAlreadyLiked_ForLike(curUser, movie);
 
-            if (movieIsAlreadyLiked)
+            if (CheckIfMovieIsAlready_Disliked(curUser, movie))
             {
-                return;
+                RemoveDislikedMovie(curUser, movie);
             }
 
-            data.LikedMovies.Add(new LikedMovie
+            if (CheckIfMovieIsAlready_Liked(curUser, movie))
             {
-                MovieId = movie.Id,
-                UserId = curUser.Id
-            });
-            data.SaveChanges();
-        }
-
-        private static bool CheckIfMovieIsAlreadyLiked_ForLike(User curUser, Movie movie)
-        {
-            var likedMovie = curUser.LikedMovies.FirstOrDefault(x => x.MovieId == movie.Id);
-            if (likedMovie != null)
-            {
-                return true;
+                RemoveLikedMovie(curUser, movie);
+                /////////////////////////////////////////////TODO notif
             }
             else
             {
-                return false;
+                data.LikedMovies.Add(new LikedMovie
+                {
+                    MovieId = movie.Id,
+                    UserId = curUser.Id
+                });
             }
+            data.SaveChanges();
         }
 
-        private void CheckIfMovieIsAlreadyDisliked_ForLike(User curUser, Movie movie)
+        public void MarkMovieAsSeen(string movieId, string userName)
+        {
+            var curUser = data.Users.Include(x => x.SeenMovies).FirstOrDefault(x => x.UserName == userName);
+            CreateMovieIfItDoesNotExist(movieId);
+            var movie = data.Movies.FirstOrDefault(x => x.MoviePath == movieId);
+
+            if (CheckIfMovieIsAlready_Seen(curUser, movie))
+            {
+                RemoveSeenMovie(curUser, movie);
+            }
+            else
+            {
+                data.SeenMovies.Add(new SeenMovie
+                {
+                    MovieId = movie.Id,
+                    UserId = curUser.Id
+                });
+            }
+            data.SaveChanges();
+        }
+        private void CreateMovieIfItDoesNotExist(string moviePath)
+        {
+            if (data.Movies.FirstOrDefault(x => x.MoviePath == moviePath) == null)
+            {
+                var movieId = Guid.NewGuid().ToString();
+                data.Movies.Add(new Movie
+                {
+                    Id = movieId,
+                    MoviePath = moviePath
+                });
+                data.SaveChanges();
+            }
+        }
+        private static bool CheckIfMovieIsAlready_Liked(User curUser, Movie movie)
+        {
+            return curUser.LikedMovies.FirstOrDefault(x => x.MovieId == movie.Id) != null ? true : false;
+        }
+        private static bool CheckIfMovieIsAlready_Disliked(User curUser, Movie movie)
+        {
+            return curUser.DislikedMovies.FirstOrDefault(x => x.MovieId == movie.Id) != null ? true : false;
+        }
+        private static bool CheckIfMovieIsAlready_Favourited(User curUser, Movie movie)
+        {
+            return curUser.FavouritedMovies.FirstOrDefault(x => x.MovieId == movie.Id) != null ? true : false;
+        }
+        private static bool CheckIfMovieIsAlready_Seen(User curUser, Movie movie)
+        {
+            return curUser.SeenMovies.FirstOrDefault(x => x.MovieId == movie.Id) != null ? true : false;
+        }
+        private static bool CheckIfMovieIsAlready_Flagged(User curUser, Movie movie)
+        {
+            return curUser.FlaggedMovies.FirstOrDefault(x => x.MovieId == movie.Id) != null ? true : false;
+        }
+
+        private void RemoveDislikedMovie(User curUser, Movie movie)
         {
             var dislikedMovie = curUser.DislikedMovies.FirstOrDefault(x => x.MovieId == movie.Id);
             if (dislikedMovie != null)
@@ -120,7 +176,7 @@
                 data.DislikedMovies.Remove(dislikedMovie);
             }
         }
-        private void CheckIfMovieIsAlreadyLiked_ForDisliked(User curUser, Movie movie)
+        private void RemoveLikedMovie(User curUser, Movie movie)
         {
             var likedMovie = curUser.LikedMovies.FirstOrDefault(x => x.MovieId == movie.Id);
             if (likedMovie != null)
@@ -128,48 +184,29 @@
                 data.LikedMovies.Remove(likedMovie);
             }
         }
-
-
-        private static bool CheckIfMovieIsAlreadyDisliked_ForDisliked(User curUser, Movie movie)
+        private void RemoveFavouritedMovie(User curUser, Movie movie)
         {
-            var dislikedMovie = curUser.DislikedMovies.FirstOrDefault(x => x.MovieId == movie.Id);
-            if (dislikedMovie != null)
+            var favouritedMovie = curUser.FavouritedMovies.FirstOrDefault(x => x.MovieId == movie.Id);
+            if (favouritedMovie != null)
             {
-                return true;
-            }
-            else
-            {
-                return false;
+                data.FavouritedMovies.Remove(favouritedMovie);
             }
         }
-
-
-        public void MarkMovieAsSeen(string movieId, string userName)
+        private void RemoveSeenMovie(User curUser, Movie movie)
         {
-            var curUser = data.Users.Include(x => x.SeenMovies).FirstOrDefault(x => x.UserName == userName);
-            if (data.Movies.FirstOrDefault(x => x.MoviePath == movieId) == null)
+            var seenMovie = curUser.SeenMovies.FirstOrDefault(x => x.MovieId == movie.Id);
+            if (seenMovie != null)
             {
-                CreateMovie(movieId);
+                data.SeenMovies.Remove(seenMovie);
             }
-            var movie = data.Movies.FirstOrDefault(x => x.MoviePath == movieId);
-
-            data.SeenMovies.Add(new SeenMovie
-            {
-                MovieId = movie.Id,
-                UserId = curUser.Id
-            });
-            data.SaveChanges();
         }
-
-        private void CreateMovie(string moviePath)
+        private void RemoveFlaggedMovie(User curUser, Movie movie)
         {
-            var movieId = Guid.NewGuid().ToString();
-            data.Movies.Add(new Movie
+            var flaggedMovie = curUser.FlaggedMovies.FirstOrDefault(x => x.MovieId == movie.Id);
+            if (flaggedMovie != null)
             {
-                Id = movieId,
-                MoviePath = moviePath
-            });
-            data.SaveChanges();
+                data.FlaggedMovies.Remove(flaggedMovie);
+            }
         }
     }
 }

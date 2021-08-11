@@ -1,8 +1,8 @@
-﻿
-namespace DavidsList.Services
+﻿namespace DavidsList.Services
 {
-    using Microsoft.AspNetCore.Http;
     using System.Security.Claims;
+    using Microsoft.AspNetCore.Http;
+    using DavidsList.Services.Interfaces;
 
     public class UserService : IUserService
     {
