@@ -11,18 +11,14 @@
 
     public class UserController : Controller
     {
-        private readonly UserManager<User> userManager;
         private readonly SignInManager<User> signInManager;
-        private readonly DavidsListDbContext data;
         private readonly IAccountInteractor accountInteractor;
         private readonly INotyfService _notyf;
 
 
-        public UserController(UserManager<User> userManager, SignInManager<User> signInManager, DavidsListDbContext db, INotyfService notyf, IAccountInteractor interactor)
+        public UserController(SignInManager<User> signInManager, INotyfService notyf, IAccountInteractor interactor)
         {
-            this.userManager = userManager;
             this.signInManager = signInManager;
-            this.data = db;
             _notyf = notyf;
             this.accountInteractor = interactor;
         }
@@ -87,6 +83,7 @@
         public async Task<IActionResult> Logout()
         {
             await this.signInManager.SignOutAsync();
+            _notyf.Success("You Logged Out Successfully! Redirecting to home page...");
             return RedirectToAction("Index", "Home");
         }
       

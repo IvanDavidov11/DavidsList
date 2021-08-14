@@ -1,16 +1,16 @@
 namespace DavidsList
 {
-    using AspNetCoreHero.ToastNotification;
     using DavidsList.Data;
+    using DavidsList.Services;
     using DavidsList.Data.DbModels;
     using DavidsList.Infrastructures;
-    using DavidsList.Services;
-    using DavidsList.Services.Interfaces;
-    using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
-    using Microsoft.EntityFrameworkCore;
+    using Microsoft.AspNetCore.Builder;
+    using DavidsList.Services.Interfaces;
+    using AspNetCoreHero.ToastNotification;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Hosting;
     public class Startup
     {
