@@ -21,9 +21,6 @@
         public DbSet<DislikedMovie> DislikedMovies { get; init; }
         public DbSet<FlaggedMovie> FlaggedMovies { get; init; }
 
-
-
-
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<GenreUser>(ent =>

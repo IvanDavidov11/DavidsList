@@ -45,6 +45,7 @@ namespace DavidsList
             services.AddHttpContextAccessor();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IMarkMovieService, MarkMovieService>();
+            services.AddTransient<IAccountInteractor,AccountInteractor>();
 
         }
 

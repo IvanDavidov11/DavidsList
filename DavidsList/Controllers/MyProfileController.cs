@@ -37,7 +37,6 @@
                 ImageUrl = curUser.ProfilePictureUrl == null ? "https://cdn.drawception.com/drawings/A4xPK14g50.png" : curUser.ProfilePictureUrl,
                 Introduction = curUser.Introduction,
             };
-
             return View(model);
         }
 
@@ -48,21 +47,18 @@
             {
                 return RedirectToAction("Error", "Home");
             }
-            
             if (intrd != null)
             {
                 data.Users.FirstOrDefault(x => x.UserName == User.Identity.Name).Introduction = intrd;
                 _notyf.Success("Successfuly changed profile introdcution...");
 
             }
-
             if (url != null && Uri.IsWellFormedUriString(url, UriKind.Absolute))
             {
                 data.Users.FirstOrDefault(x => x.UserName == User.Identity.Name).ProfilePictureUrl = url;
                 _notyf.Success("Successfuly changed profile picture...");
 
             }
-
             else if (url != null)
             {
                 ModelState.AddModelError("invalidUrl", "This Url is not valid. Please try another...");
@@ -75,8 +71,6 @@
                 ImageUrl = curUser.ProfilePictureUrl == null ? "https://cdn.drawception.com/drawings/A4xPK14g50.png" : curUser.ProfilePictureUrl,
                 Introduction = curUser.Introduction,
             };
-
-
             return View(model);
         }
 
