@@ -16,17 +16,22 @@
     using DavidsList.Models.MovieDetails;
     using Microsoft.EntityFrameworkCore;
     using DavidsList.Data;
+    using AspNetCoreHero.ToastNotification.Abstractions;
+    using DavidsList.Models;
 
     public class GetInformationFromApi : IGetInformationFromApi
     {
         private static HttpClient client = new HttpClient();
         private readonly DavidsListDbContext data;
         private readonly IUserService user;
-
-        public GetInformationFromApi(DavidsListDbContext db, IUserService userService)
+        private Random rngPicker = new Random();
+        private readonly INotyfService _notyf;
+        public GetInformationFromApi(DavidsListDbContext db, IUserService userService, INotyfService notyf)
         {
             this.data = db;
             this.user = userService;
+            _notyf = notyf;
+
         }
 
         private async Task<List<TopRatedMoviesApiModel>> GetIdsForMoviesInApi_MostRated()
@@ -52,6 +57,7 @@
                 return bodyJson;
             }
         }
+
         private async Task<MovieQuickShowcaseViewModelWithRaiting> GetMovie_MostRated(string movieId, double raiting)
         {
             var curUser = GetUserFromService();
@@ -78,12 +84,7 @@
                     Year = bodyJson.year,
                     MoviePath = CleanUpMoviePath(bodyJson.id),
                     Raiting = raiting,
-                    IsSeen = curUser.SeenMovies.FirstOrDefault(x => x.Movie.MoviePath == movieId) == null ? false : true,
-                    IsLiked = curUser.LikedMovies.FirstOrDefault(x => x.Movie.MoviePath == movieId) == null ? false : true,
-                    IsDisliked = curUser.DislikedMovies.FirstOrDefault(x => x.Movie.MoviePath == movieId) == null ? false : true,
-                    IsFavourited = curUser.FavouritedMovies.FirstOrDefault(x => x.Movie.MoviePath == movieId) == null ? false : true,
-                    IsFlagged = curUser.FlaggedMovies.FirstOrDefault(x => x.Movie.MoviePath == movieId) == null ? false : true,
-
+                    Buttons = CreateButtonModel(movieId)
                 });
             }
         }
@@ -108,8 +109,6 @@
 
             return movies;
         }
-
-
         private async Task<List<string>> GetIdsForMoviesInApi_MostPopular()
         {
 
@@ -159,11 +158,7 @@
                     ImgUrl = bodyJson.image.url,
                     Year = bodyJson.year,
                     MoviePath = CleanUpMoviePath(bodyJson.id),
-                    IsSeen = curUser.SeenMovies.FirstOrDefault(x => x.Movie.MoviePath == movieId) == null ? false : true,
-                    IsLiked = curUser.LikedMovies.FirstOrDefault(x => x.Movie.MoviePath == movieId) == null ? false : true,
-                    IsDisliked = curUser.DislikedMovies.FirstOrDefault(x => x.Movie.MoviePath == movieId) == null ? false : true,
-                    IsFavourited = curUser.FavouritedMovies.FirstOrDefault(x => x.Movie.MoviePath == movieId) == null ? false : true,
-                    IsFlagged = curUser.FlaggedMovies.FirstOrDefault(x => x.Movie.MoviePath == movieId) == null ? false : true,
+                    Buttons = CreateButtonModel(CleanUpMoviePath(bodyJson.id))
                 });
             }
         }
@@ -184,7 +179,6 @@
 
             return users;
         }
-
         public async Task<MovieDetailsViewModel> GetSpecificMovieDetails(string moviePath)
         {
             var curUser = GetUserFromService();
@@ -218,16 +212,10 @@
                     Genres = bodyJson.genres,
                     ShortPlot = bodyJson.plotOutline != null ? bodyJson.plotOutline.text : "This movie has no plot outline...",
                     LongPlot = bodyJson.plotSummary != null ? bodyJson.plotSummary.text : "This movie has no summary of its plot...",
-                    IsSeen = curUser.SeenMovies.FirstOrDefault(x => x.Movie.MoviePath == moviePath) == null ? false : true,
-                    IsLiked = curUser.LikedMovies.FirstOrDefault(x => x.Movie.MoviePath == moviePath) == null ? false : true,
-                    IsDisliked = curUser.DislikedMovies.FirstOrDefault(x => x.Movie.MoviePath == moviePath) == null ? false : true,
-                    IsFavourited = curUser.FavouritedMovies.FirstOrDefault(x => x.Movie.MoviePath == moviePath) == null ? false : true,
-                    IsFlagged = curUser.FlaggedMovies.FirstOrDefault(x => x.Movie.MoviePath == moviePath) == null ? false : true,
+                    Buttons = CreateButtonModel(moviePath),
                 };
             }
         }
-
-
         public async Task<List<SearchResultsViewModel>> GetSearchResultModel(string query)
         {
             var curUser = GetUserFromService();
@@ -261,11 +249,7 @@
                                 MoviePath = moviePath,
                                 Title = curMovieResult.title,
                                 Year = curMovieResult.year,
-                                IsSeen = curUser.SeenMovies.FirstOrDefault(x => x.Movie.MoviePath == moviePath) == null ? false : true,
-                                IsLiked = curUser.LikedMovies.FirstOrDefault(x => x.Movie.MoviePath == moviePath) == null ? false : true,
-                                IsDisliked = curUser.DislikedMovies.FirstOrDefault(x => x.Movie.MoviePath == moviePath) == null ? false : true,
-                                IsFavourited = curUser.FavouritedMovies.FirstOrDefault(x => x.Movie.MoviePath == moviePath) == null ? false : true,
-                                IsFlagged = curUser.FlaggedMovies.FirstOrDefault(x => x.Movie.MoviePath == moviePath) == null ? false : true,
+                                Buttons = CreateButtonModel(moviePath),
                             });
                         }
                     }
@@ -277,13 +261,12 @@
                 return model;
             }
         }
-
         private Data.DbModels.User GetUserFromService()
         {
             var uName = user.GetUser().Identity.Name;
             var curUser = data.Users
                 .Include(x => x.UserGenres)
-                .ThenInclude(x=>x.Genre)
+                .ThenInclude(x => x.Genre)
                 .Include(x => x.FavouritedMovies)
                 .ThenInclude(x => x.Movie)
                 .Include(x => x.FlaggedMovies)
@@ -297,10 +280,93 @@
                 .FirstOrDefault(x => x.UserName == uName);
             return curUser;
         }
-
         public string CleanUpMoviePath(string path)
         {
             return path.Substring(7, path.Length - 8);
         }
+
+        private Button CreateButtonModel(string movieId)
+        {
+            var curUser = GetUserFromService();
+            if (!this.user.GetUser().Identity.IsAuthenticated)
+            {
+                return null;
+            }
+            var result = new Button
+            {
+                IsSeen = curUser.SeenMovies.FirstOrDefault(x => x.Movie.MoviePath == movieId) == null ? false : true,
+                IsLiked = curUser.LikedMovies.FirstOrDefault(x => x.Movie.MoviePath == movieId) == null ? false : true,
+                IsDisliked = curUser.DislikedMovies.FirstOrDefault(x => x.Movie.MoviePath == movieId) == null ? false : true,
+                IsFavourited = curUser.FavouritedMovies.FirstOrDefault(x => x.Movie.MoviePath == movieId) == null ? false : true,
+                IsFlagged = curUser.FlaggedMovies.FirstOrDefault(x => x.Movie.MoviePath == movieId) == null ? false : true,
+            };
+            return result;
+        }
+
+        public MovieDetailsViewModel GetRandomMovieModel_Surprise()
+        {
+            var pickedGenre = PickRandomGenreFrom_AllGenres();
+            var allMoviesOfGenre = GetMoviesFromGenre(pickedGenre.ToLower()).Result;
+            var pickedMovie = CleanUpMoviePath(PickRandomMovie(allMoviesOfGenre));
+            var result = GetSpecificMovieDetails(pickedMovie).Result;
+            _notyf.Custom($"Suggested movie in genre: {pickedGenre}", null, "yellow");
+            return result;
+        }
+        public MovieDetailsViewModel GetRandomMovieModel_Preferred()
+        {
+            var pickedGenre = PickRandomGenreFrom_PreferredGenres();
+            var allMoviesOfGenre = GetMoviesFromGenre(pickedGenre.ToLower()).Result;
+            var pickedMovie = CleanUpMoviePath(PickRandomMovie(allMoviesOfGenre));
+            var result = GetSpecificMovieDetails(pickedMovie).Result;
+            _notyf.Custom($"Suggested movie in genre: {pickedGenre}", null, "yellow");
+            return result;
+        }
+        public MovieDetailsViewModel GetRandomMovieModel_Specific(string genre)
+        {
+            var allMoviesOfGenre = GetMoviesFromGenre(genre.ToLower()).Result;
+            var pickedMovie = CleanUpMoviePath(PickRandomMovie(allMoviesOfGenre));
+            var result = GetSpecificMovieDetails(pickedMovie).Result;
+            _notyf.Custom($"Suggested movie in genre: {genre}", null, "yellow");
+            return result;
+        }
+
+        private async Task<List<string>> GetMoviesFromGenre(string genre)
+        {
+            var request = new HttpRequestMessage
+            {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri($"https://imdb8.p.rapidapi.com/title/get-popular-movies-by-genre?genre=%2Fchart%2Fpopular%2Fgenre%2F{genre}"),
+                Headers =
+                {
+                    { "x-rapidapi-key", IMDbApiKey },
+                     { "x-rapidapi-host", IMDbApiHost },
+                },
+            };
+            using (var response = await client.SendAsync(request))
+            {
+                response.EnsureSuccessStatusCode();
+                var body = await response.Content.ReadAsStringAsync();
+                var bodyJson = JsonConvert.DeserializeObject<List<string>>(body);
+                return bodyJson;
+            }
+        }
+        private string PickRandomMovie(List<string> movies)
+        {
+            var result = movies[rngPicker.Next(0, movies.Count)];
+            return result;
+        }
+        private string PickRandomGenreFrom_AllGenres()
+        {
+            var allGenres = data.Genres.ToList();
+            return allGenres[this.rngPicker.Next(0, allGenres.Count)].GenreType.ToString();
+        }
+        private string PickRandomGenreFrom_PreferredGenres()
+        {
+            var curUser = user.GetUser().Identity.Name;
+            var preferredGenres = data.Users.Include(x => x.UserGenres).ThenInclude(x => x.Genre).FirstOrDefault(x => x.UserName == curUser).UserGenres;
+            /////TODO ADD ERROR FOR NO GENRE USERS
+            return preferredGenres.ElementAt(this.rngPicker.Next(0, preferredGenres.Count)).Genre.GenreType.ToString();
+        }
+
     }
 }

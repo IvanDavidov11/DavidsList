@@ -1,5 +1,4 @@
-﻿
-body {
+﻿body {
     background-image: url("/images/Curtain-PNG-Pic-Background.png");
     background-repeat: no-repeat;
     background-size: cover;
@@ -10,19 +9,21 @@ body {
     font-family: 'Kreon', serif;
 }
 
-button {
-}
-
 header {
     opacity: 90%;
     position: sticky;
     top: 0;
 }
 
-
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
     color: #fff;
     border-color: #1861ac;
+}
+.imBored-dropdown-btn{
+    padding-right:30px;
+}
+.imBored-dropdown-btn:hover {
+    background-color:red;
 }
 
 html {
@@ -100,6 +101,14 @@ body {
     background-color: red;
     width: 75px;
     height: 40px
+}
+
+.nav-item{
+    margin-right:10px;
+}
+.nav-item:hover {
+    background-color:red;
+    border-radius:5px;
 }
 
 .list {

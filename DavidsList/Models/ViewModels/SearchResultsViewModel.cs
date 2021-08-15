@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace DavidsList.Models.ViewModels
+﻿namespace DavidsList.Models.ViewModels
 {
     public class SearchResultsViewModel
     {
@@ -12,10 +7,6 @@ namespace DavidsList.Models.ViewModels
         public string MoviePath { get; set; }
         public int Year { get; set; }
 
-        public bool IsLiked { get; set; }
-        public bool IsDisliked { get; set; }
-        public bool IsFavourited { get; set; }
-        public bool IsSeen { get; set; }
-        public bool IsFlagged { get; set; }
+        public Button Buttons { get; set; }
     }
 }

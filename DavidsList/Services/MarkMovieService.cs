@@ -168,6 +168,7 @@
                 data.SaveChanges();
             }
         }
+
         private static bool CheckIfMovieIsAlready_Liked(User curUser, Movie movie)
         {
             return curUser.LikedMovies.FirstOrDefault(x => x.MovieId == movie.Id) != null ? true : false;

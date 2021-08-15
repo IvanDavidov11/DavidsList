@@ -6,35 +6,38 @@
 <ol class="list">
     @foreach (var movie in Model)
     {
-    <li>
-        <div class="regular">
-            <a href="MovieDetails?id=@movie.MoviePath">
-                <img class="thumbnailPic" src="@movie.ImgUrl">
-            </a>
-            <h1>@movie.Title</h1>
-            <h3>Relase Date: @movie.Year</h3>
-            <partial name="_ButtonsPartial" model="@movie" />
-        </div>
-    </li>
-    @*<li>
-        <div class="regular">
-            <a href="MovieDetails/@movie.MoviePath">
-                <img class="thumbnailPic" src="@movie.ImgUrl">
-            </a>
-            <h1>@movie.Title</h1>
-            <h3>Relase Date: @movie.Year</h3>
-            <partial name="_ButtonsPartial" model="@movie.MoviePath" />
-        </div>
-    </li>
-    <li>
-        <div class="regular">
-            <a href="MovieDetails/@movie.MoviePath">
-                <img class="thumbnailPic" src="@movie.ImgUrl">
-            </a>
-            <h1>@movie.Title</h1>
-            <h3>Relase Date: @movie.Year</h3>
-            <partial name="_ButtonsPartial" model="@movie.MoviePath" />
-        </div>
-    </li>*@
+        <li>
+            <div class="regular">
+                <a href="MovieDetails?id=@movie.MoviePath">
+                    <img class="thumbnailPic" src="@movie.ImgUrl">
+                </a>
+                <h1>@movie.Title</h1>
+                <h3>Relase Date: @movie.Year</h3>
+                @if (movie.Buttons != null)
+                {
+                    <partial name="_ButtonsPartial" model="@movie" />
+                }
+            </div>
+        </li>
+        @*<li>
+                <div class="regular">
+                    <a href="MovieDetails/@movie.MoviePath">
+                        <img class="thumbnailPic" src="@movie.ImgUrl">
+                    </a>
+                    <h1>@movie.Title</h1>
+                    <h3>Relase Date: @movie.Year</h3>
+                    <partial name="_ButtonsPartial" model="@movie.MoviePath" />
+                </div>
+            </li>
+            <li>
+                <div class="regular">
+                    <a href="MovieDetails/@movie.MoviePath">
+                        <img class="thumbnailPic" src="@movie.ImgUrl">
+                    </a>
+                    <h1>@movie.Title</h1>
+                    <h3>Relase Date: @movie.Year</h3>
+                    <partial name="_ButtonsPartial" model="@movie.MoviePath" />
+                </div>
+            </li>*@
     }
 </ol>

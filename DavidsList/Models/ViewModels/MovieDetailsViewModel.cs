@@ -17,10 +17,6 @@
         public string ShortPlot { get; set; }
         public string LongPlot { get; set; }
 
-        public bool IsLiked { get; set; }
-        public bool IsDisliked { get; set; }
-        public bool IsFavourited { get; set; }
-        public bool IsSeen { get; set; }
-        public bool IsFlagged { get; set; }
+        public Button Buttons { get; set; }
     }
 }

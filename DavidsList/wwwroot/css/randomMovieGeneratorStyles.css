@@ -1,0 +1,13 @@
+﻿.rnd-btn{
+    background-color:red;
+    
+}
+.rnd-btn:hover{
+    background-color: yellow;
+    color:black;
+}
+
+.rnd-btn-description{
+    text-align:center;
+    margin-bottom:50px;
+}

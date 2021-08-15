@@ -4,7 +4,7 @@
 <a title="I like this movie!" href="/Mark/Like?id=@Model.MoviePath.ToString()"><img src="~/Icons/Add.png" /></a>
 
 <a title="I dislike this movie!" href="/Mark/Dislike?id=@Model.MoviePath.ToString()"><img src="~/Icons/remove.png" /></a>
-@if (Model.IsFavourited)
+@if (Model.Buttons.IsFavourited)
 {
     <a title="I love this movie!" href="/Mark/Favourite?id=@Model.MoviePath.ToString()"><img src="~/Icons/favHeart.png" /></a>
 }
