@@ -364,7 +364,6 @@
         {
             var curUser = user.GetUser().Identity.Name;
             var preferredGenres = data.Users.Include(x => x.UserGenres).ThenInclude(x => x.Genre).FirstOrDefault(x => x.UserName == curUser).UserGenres;
-            /////TODO ADD ERROR FOR NO GENRE USERS
             return preferredGenres.ElementAt(this.rngPicker.Next(0, preferredGenres.Count)).Genre.GenreType.ToString();
         }
 

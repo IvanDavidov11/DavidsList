@@ -452,3 +452,4 @@ C:\Users\andic\source\repos\DavidsList\DavidsList\bin\Debug\net5.0\AspNetCoreHer
 C:\Users\andic\source\repos\DavidsList\DavidsList\bin\Debug\net5.0\AspNetCoreHero.ToastNotification.dll
 C:\Users\andic\source\repos\DavidsList\DavidsList\obj\Debug\net5.0\Razor\Views\RandomMovieGenerator\Surprise.cshtml.g.cs
 C:\Users\andic\source\repos\DavidsList\DavidsList\obj\Debug\net5.0\Razor\Views\RandomMovieGenerator\Preferred.cshtml.g.cs
+C:\Users\andic\source\repos\DavidsList\DavidsList\obj\Debug\net5.0\Razor\Views\User\Preferences.cshtml.g.cs

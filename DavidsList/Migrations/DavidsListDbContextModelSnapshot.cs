@@ -43,40 +43,6 @@ namespace DavidsList.Migrations
                     b.ToTable("Comments");
                 });
 
-            modelBuilder.Entity("DavidsList.Data.DbModels.DislikedMovie", b =>
-                {
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnName("UserId");
-
-                    b.Property<string>("MovieId")
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnName("MovieId");
-
-                    b.HasKey("UserId", "MovieId");
-
-                    b.HasIndex("MovieId");
-
-                    b.ToTable("DislikedMovies");
-                });
-
-            modelBuilder.Entity("DavidsList.Data.DbModels.FavouritedMovie", b =>
-                {
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnName("UserId");
-
-                    b.Property<string>("MovieId")
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnName("MovieId");
-
-                    b.HasKey("UserId", "MovieId");
-
-                    b.HasIndex("MovieId");
-
-                    b.ToTable("FavouritedMovies");
-                });
-
             modelBuilder.Entity("DavidsList.Data.DbModels.Genre", b =>
                 {
                     b.Property<int>("Id")
@@ -97,7 +63,7 @@ namespace DavidsList.Migrations
                     b.ToTable("Genres");
                 });
 
-            modelBuilder.Entity("DavidsList.Data.DbModels.LikedMovie", b =>
+            modelBuilder.Entity("DavidsList.Data.DbModels.ManyToManyTables.DislikedMovie", b =>
                 {
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)")
@@ -111,7 +77,24 @@ namespace DavidsList.Migrations
 
                     b.HasIndex("MovieId");
 
-                    b.ToTable("LikedMovies");
+                    b.ToTable("DislikedMovies");
+                });
+
+            modelBuilder.Entity("DavidsList.Data.DbModels.ManyToManyTables.FavouritedMovie", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnName("UserId");
+
+                    b.Property<string>("MovieId")
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnName("MovieId");
+
+                    b.HasKey("UserId", "MovieId");
+
+                    b.HasIndex("MovieId");
+
+                    b.ToTable("FavouritedMovies");
                 });
 
             modelBuilder.Entity("DavidsList.Data.DbModels.ManyToManyTables.FlaggedMovie", b =>
@@ -148,21 +131,24 @@ namespace DavidsList.Migrations
                     b.ToTable("GenresUsers");
                 });
 
-            modelBuilder.Entity("DavidsList.Data.DbModels.Movie", b =>
+            modelBuilder.Entity("DavidsList.Data.DbModels.ManyToManyTables.LikedMovie", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnName("UserId");
 
-                    b.Property<string>("MoviePath")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("MovieId")
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnName("MovieId");
 
-                    b.HasKey("Id");
+                    b.HasKey("UserId", "MovieId");
 
-                    b.ToTable("Movies");
+                    b.HasIndex("MovieId");
+
+                    b.ToTable("LikedMovies");
                 });
 
-            modelBuilder.Entity("DavidsList.Data.DbModels.SeenMovie", b =>
+            modelBuilder.Entity("DavidsList.Data.DbModels.ManyToManyTables.SeenMovie", b =>
                 {
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)")
@@ -177,6 +163,20 @@ namespace DavidsList.Migrations
                     b.HasIndex("MovieId");
 
                     b.ToTable("SeenMovies");
+                });
+
+            modelBuilder.Entity("DavidsList.Data.DbModels.Movie", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("MoviePath")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Movies");
                 });
 
             modelBuilder.Entity("DavidsList.Data.DbModels.User", b =>
@@ -196,6 +196,9 @@ namespace DavidsList.Migrations
                         .HasColumnType("nvarchar(256)");
 
                     b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("FirstTimeLogginIn")
                         .HasColumnType("bit");
 
                     b.Property<string>("Introduction")
@@ -392,7 +395,7 @@ namespace DavidsList.Migrations
                         .HasForeignKey("MovieId");
                 });
 
-            modelBuilder.Entity("DavidsList.Data.DbModels.DislikedMovie", b =>
+            modelBuilder.Entity("DavidsList.Data.DbModels.ManyToManyTables.DislikedMovie", b =>
                 {
                     b.HasOne("DavidsList.Data.DbModels.Movie", "Movie")
                         .WithMany()
@@ -411,7 +414,7 @@ namespace DavidsList.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("DavidsList.Data.DbModels.FavouritedMovie", b =>
+            modelBuilder.Entity("DavidsList.Data.DbModels.ManyToManyTables.FavouritedMovie", b =>
                 {
                     b.HasOne("DavidsList.Data.DbModels.Movie", "Movie")
                         .WithMany()
@@ -421,25 +424,6 @@ namespace DavidsList.Migrations
 
                     b.HasOne("DavidsList.Data.DbModels.User", "User")
                         .WithMany("FavouritedMovies")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Movie");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("DavidsList.Data.DbModels.LikedMovie", b =>
-                {
-                    b.HasOne("DavidsList.Data.DbModels.Movie", "Movie")
-                        .WithMany()
-                        .HasForeignKey("MovieId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DavidsList.Data.DbModels.User", "User")
-                        .WithMany("LikedMovies")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -487,7 +471,26 @@ namespace DavidsList.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("DavidsList.Data.DbModels.SeenMovie", b =>
+            modelBuilder.Entity("DavidsList.Data.DbModels.ManyToManyTables.LikedMovie", b =>
+                {
+                    b.HasOne("DavidsList.Data.DbModels.Movie", "Movie")
+                        .WithMany()
+                        .HasForeignKey("MovieId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DavidsList.Data.DbModels.User", "User")
+                        .WithMany("LikedMovies")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Movie");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("DavidsList.Data.DbModels.ManyToManyTables.SeenMovie", b =>
                 {
                     b.HasOne("DavidsList.Data.DbModels.Movie", "Movie")
                         .WithMany()

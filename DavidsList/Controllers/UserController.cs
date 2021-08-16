@@ -8,6 +8,7 @@
     using Microsoft.AspNetCore.Identity;
     using AspNetCoreHero.ToastNotification.Abstractions;
     using DavidsList.Services.Interfaces;
+    using DavidsList.Models.ViewModels;
 
     public class UserController : Controller
     {
@@ -48,9 +49,9 @@
                 }
                 return View(model);
             }
-
             return RedirectToAction("Login", "User");
         }
+
 
         public IActionResult Login()
         {
@@ -69,7 +70,7 @@
                 return View(model);
             }
             var possibleErrors = accountInteractor.TryLoggingUserIn(model).Result;
-            if(possibleErrors != null)
+            if (possibleErrors != null)
             {
                 foreach (var curError in possibleErrors)
                 {
@@ -77,16 +78,41 @@
                 }
                 return View(model);
             }
+            if (accountInteractor.CheckIfFirstTimeLogin(model.Username))
+            {
+                return RedirectToAction("Preferences", "User");
+            }
             return RedirectToAction("Index", "Home");
         }
 
+        public IActionResult Preferences()
+        {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Error", "Home");
+            }
+            return View(accountInteractor.GetPreferencesModel());
+
+        }
+
+        [HttpPost]
+        public IActionResult Preferences(int[] curGenre)
+        {
+            
+            if (!User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Error", "Home");
+            }
+            accountInteractor.SetGenresForUser(curGenre);
+            return RedirectToAction("Index", "Home");
+        }
         public async Task<IActionResult> Logout()
         {
             await this.signInManager.SignOutAsync();
             _notyf.Success("You Logged Out Successfully! Redirecting to home page...");
             return RedirectToAction("Index", "Home");
         }
-      
+
     }
-   
+
 }

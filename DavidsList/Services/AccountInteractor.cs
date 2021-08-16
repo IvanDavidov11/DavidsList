@@ -9,6 +9,8 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using System.Linq;
+    using DavidsList.Models.ViewModels;
+    using DavidsList.Data.DbModels.ManyToManyTables;
 
     public class AccountInteractor : IAccountInteractor
     {
@@ -16,12 +18,49 @@
         private readonly SignInManager<User> signInManager;
         private readonly DavidsListDbContext data;
         private readonly INotyfService _notyf;
-        public AccountInteractor(UserManager<User> userManager, SignInManager<User> signInManager, DavidsListDbContext db, INotyfService notyf)
+        private readonly IUserService user;
+
+        public AccountInteractor(UserManager<User> userManager, SignInManager<User> signInManager, DavidsListDbContext db, INotyfService notyf, IUserService userService)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
+            this.user = userService;
             this.data = db;
             _notyf = notyf;
+        }
+
+        public List<GenreViewModel> GetPreferencesModel()
+        {
+            var result = new List<GenreViewModel>();
+            foreach (var genre in data.Genres)
+            {
+                result.Add(new GenreViewModel
+                {
+                    Id = genre.Id,
+                    GenreType = genre.GenreType
+                });
+            }
+            return result;
+        }
+
+        public void SetGenresForUser(int[] genres)
+        {
+            var username = user.GetUser().Identity.Name;
+            var curUser = data.Users.First(x => x.UserName == username);
+            foreach (var genre in genres)
+            {
+                curUser.UserGenres.Add(new GenreUser
+                {
+                    GenreId = genre,
+                });
+            }
+            curUser.FirstTimeLogginIn = false;
+            data.SaveChanges();
+        }
+        public bool CheckIfFirstTimeLogin(string username)
+        {
+            var curUser = data.Users.First(x => x.UserName == username);
+            return curUser.FirstTimeLogginIn;
         }
 
         public async Task<Dictionary<string, string>> TryLoggingUserIn(LoginFormModel model)
@@ -44,6 +83,7 @@
             }
 
             await this.signInManager.SignInAsync(loggedUser, true);
+            var firstLogg = data.Users.FirstOrDefault(x=>x.UserName == model.Username).FirstTimeLogginIn;
             _notyf.Success("Logged-in successfuly, redirecting to Home page.");
             return null;
         }

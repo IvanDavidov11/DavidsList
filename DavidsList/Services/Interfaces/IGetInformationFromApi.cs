@@ -13,6 +13,5 @@
         MovieDetailsViewModel GetRandomMovieModel_Surprise();
         MovieDetailsViewModel GetRandomMovieModel_Preferred();
         MovieDetailsViewModel GetRandomMovieModel_Specific(string genre);
-
     }
 }

@@ -19,7 +19,6 @@
         {
             this.data = db;
             _notyf = notyf;
-
         }
 
         public void MarkMovieAsDisliked(string movieId, string userName)

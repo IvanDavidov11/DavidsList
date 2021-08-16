@@ -55,3 +55,10 @@
 .picInput {
     width:260px
 }
+
+.Genres-container div{
+    margin-right:10px;
+}
+.Genres-container label {
+    font-size: 100px;
+}
