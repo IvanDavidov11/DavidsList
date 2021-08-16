@@ -21,7 +21,6 @@ namespace DavidsList.Controllers
         }
         public IActionResult Specific()
         {
-            
             return View(ApiConnector.GetRandomMovieModel_Surprise());
         }
         public IActionResult Surprise()
@@ -32,7 +31,12 @@ namespace DavidsList.Controllers
         {
             if (!User.Identity.IsAuthenticated)
             {
-                _notyf.Error("You cannot access this feature without logging in");
+                _notyf.Error("You cannot access this feature without logging in...");
+                return RedirectToAction("Index", "RandomMovieGenerator");
+            }
+            if (!ApiConnector.CheckIfUserHasFavouritedGenre())
+            {
+                _notyf.Error("You have no favourited genres. Go to \"MyProfile\" and then \"Prefrence\" to set them up...");
                 return RedirectToAction("Index", "RandomMovieGenerator");
             }
             return View(ApiConnector.GetRandomMovieModel_Preferred());

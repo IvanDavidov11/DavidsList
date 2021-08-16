@@ -1,0 +1,21 @@
+﻿<div class="genres-container">
+    <form action="/User/Preferences" method="post">
+        @foreach (var curGenre in Model)
+        {
+            <div class="form-check form-check-inline">
+                @if (curGenre.IsPicked)
+                {
+                    <input class="form-check-input" type="checkbox" id=@curGenre.Id name="curGenre" value=@curGenre.Id checked>
+                }
+                else
+                {
+                    <input class="form-check-input" type="checkbox" id=@curGenre.Id name="curGenre" value=@curGenre.Id>
+                }
+                <label class="form-check-label" for=@curGenre.Id>@curGenre.GenreType</label>
+            </div>
+        }
+        <button type="submit">
+            <i>Save preferences.</i>
+        </button>
+    </form>
+</div>

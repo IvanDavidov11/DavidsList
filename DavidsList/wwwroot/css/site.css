@@ -85,11 +85,12 @@ body {
 .searchBar {
     margin: auto;
     width: 50%;
-    padding: 10px;
+    padding-right: 10px;
+    list-style:none;
 }
 
 .searchBarInput {
-    width: 250px;
+    width: 350px;
     height: 40px;
     border-radius: 12px;
     border: 2px solid gray;
@@ -101,6 +102,10 @@ body {
     background-color: red;
     width: 75px;
     height: 40px
+}
+.searchBarButton:hover{
+    background-color:yellow;
+    color:black;
 }
 
 .nav-item{

@@ -1,24 +1,37 @@
 ﻿@inject SignInManager<User> SignInManager
 
 <ul class="navbar-nav">
-@if (SignInManager.IsSignedIn(User))
-{
-    <li class="nav-item">
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <li class="nav-item">
+            <div class="dropdown show">
+                <a class="nav-link text-white nav-item dropdown-toggle imBored-dropdown-btn" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    My Movies
+                </a>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    <a class="dropdown-item" href="/RandomMovieGenerator">Seen Movies</a>
+                    <a class="dropdown-item" href="/TopRatedMovies">Favourite Movies</a>
+                    <a class="dropdown-item" href="/MostPopularMovies">Flagged Movies</a>
+                </div>
+            </div>
+        </li>
+
+        <li class="nav-item">
             <a class="nav-link text-white" href="/MyProfile">My Profile</a>
-    </li>
-    <li class="nav-item">
-        <form  class="form-inline" >
-            <a class="nav-link text-white" href="/User/Logout">LogOut</a>
-        </form>
-    </li>
-}
-else
-{
-    <li class="nav-item">
-        <a class="nav-link text-white" href="/User/Register">Register</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link text-white" href="/User/Login">Login</a>
-    </li>
-}
+        </li>
+        <li class="nav-item">
+            <form class="form-inline">
+                <a class="nav-link text-white" href="/User/Logout">LogOut</a>
+            </form>
+        </li>
+    }
+    else
+    {
+        <li class="nav-item">
+            <a class="nav-link text-white" href="/User/Register">Register</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-white" href="/User/Login">Login</a>
+        </li>
+    }
 </ul>

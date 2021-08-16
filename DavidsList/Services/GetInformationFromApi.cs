@@ -31,7 +31,6 @@
             this.data = db;
             this.user = userService;
             _notyf = notyf;
-
         }
 
         private async Task<List<TopRatedMoviesApiModel>> GetIdsForMoviesInApi_MostRated()
@@ -367,5 +366,11 @@
             return preferredGenres.ElementAt(this.rngPicker.Next(0, preferredGenres.Count)).Genre.GenreType.ToString();
         }
 
+        public bool CheckIfUserHasFavouritedGenre()
+        {
+            var username = user.GetUser().Identity.Name;
+            var curUser = data.Users.Include(x=>x.UserGenres).First(x => x.UserName == username);
+            return curUser.UserGenres.Count <= 0 ? false : true; 
+        }
     }
 }

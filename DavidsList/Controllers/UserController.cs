@@ -1,6 +1,5 @@
 ﻿namespace DavidsList.Controllers
 {
-    using DavidsList.Data;
     using System.Threading.Tasks;
     using DavidsList.Data.DbModels;
     using Microsoft.AspNetCore.Mvc;
@@ -8,8 +7,6 @@
     using Microsoft.AspNetCore.Identity;
     using AspNetCoreHero.ToastNotification.Abstractions;
     using DavidsList.Services.Interfaces;
-    using DavidsList.Models.ViewModels;
-
     public class UserController : Controller
     {
         private readonly SignInManager<User> signInManager;
@@ -101,10 +98,10 @@
             
             if (!User.Identity.IsAuthenticated)
             {
-                return RedirectToAction("Error", "Home");
+                return RedirectToAction("Error", "Home"); 
             }
             accountInteractor.SetGenresForUser(curGenre);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Preferences","MyProfile");
         }
         public async Task<IActionResult> Logout()
         {

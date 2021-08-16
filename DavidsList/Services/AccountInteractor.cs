@@ -11,6 +11,7 @@
     using System.Linq;
     using DavidsList.Models.ViewModels;
     using DavidsList.Data.DbModels.ManyToManyTables;
+    using Microsoft.EntityFrameworkCore;
 
     public class AccountInteractor : IAccountInteractor
     {
@@ -29,33 +30,21 @@
             _notyf = notyf;
         }
 
-        public List<GenreViewModel> GetPreferencesModel()
-        {
-            var result = new List<GenreViewModel>();
-            foreach (var genre in data.Genres)
-            {
-                result.Add(new GenreViewModel
-                {
-                    Id = genre.Id,
-                    GenreType = genre.GenreType
-                });
-            }
-            return result;
-        }
-
         public void SetGenresForUser(int[] genres)
         {
             var username = user.GetUser().Identity.Name;
-            var curUser = data.Users.First(x => x.UserName == username);
+            var curUser = data.Users.Include(x=>x.UserGenres).First(x => x.UserName == username);
+            curUser.UserGenres.Clear();
             foreach (var genre in genres)
             {
-                curUser.UserGenres.Add(new GenreUser
-                {
-                    GenreId = genre,
-                });
+                    curUser.UserGenres.Add(new GenreUser
+                    {
+                        GenreId = genre,
+                    });
             }
             curUser.FirstTimeLogginIn = false;
             data.SaveChanges();
+            _notyf.Success("Your preferences have been updated...");
         }
         public bool CheckIfFirstTimeLogin(string username)
         {
@@ -83,7 +72,7 @@
             }
 
             await this.signInManager.SignInAsync(loggedUser, true);
-            var firstLogg = data.Users.FirstOrDefault(x=>x.UserName == model.Username).FirstTimeLogginIn;
+            var firstLogg = data.Users.FirstOrDefault(x => x.UserName == model.Username).FirstTimeLogginIn;
             _notyf.Success("Logged-in successfuly, redirecting to Home page.");
             return null;
         }
@@ -132,5 +121,23 @@
             };
             return result;
         }
+
+        public List<GenreViewModel> GetPreferencesModel()
+        {
+            var username = user.GetUser().Identity.Name;
+            var curUser = data.Users.Include(x => x.UserGenres).First(x => x.UserName == username);
+            var result = new List<GenreViewModel>();
+            foreach (var genre in data.Genres)
+            {
+                result.Add(new GenreViewModel
+                {
+                    Id = genre.Id,
+                    GenreType = genre.GenreType,
+                    IsPicked = curUser.UserGenres.FirstOrDefault(x => x.GenreId == genre.Id) != null ? true : false
+                });
+            }
+            return result;
+        }
+
     }
 }

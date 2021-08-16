@@ -4,6 +4,7 @@
     using DavidsList.Data;
     using DavidsList.Data.DbModels;
     using DavidsList.Models.ViewModels;
+    using DavidsList.Services.Interfaces;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using System;
@@ -14,15 +15,15 @@
         private readonly UserManager<User> userManager;
         private readonly DavidsListDbContext data;
         private readonly INotyfService _notyf;
+        private readonly IAccountInteractor accountInteractor;
 
 
-        public MyProfileController(UserManager<User> userManager, DavidsListDbContext db, INotyfService notyf)
+        public MyProfileController(UserManager<User> userManager, DavidsListDbContext db, INotyfService notyf, IAccountInteractor interactor)
         {
             this.userManager = userManager;
             this.data = db;
             _notyf = notyf;
-
-
+            this.accountInteractor = interactor;
         }
         public IActionResult Index()
         {
@@ -57,7 +58,6 @@
             {
                 data.Users.FirstOrDefault(x => x.UserName == User.Identity.Name).ProfilePictureUrl = url;
                 _notyf.Success("Successfuly changed profile picture...");
-
             }
             else if (url != null)
             {
@@ -73,6 +73,12 @@
             };
             return View(model);
         }
+
+        public IActionResult Preferences()
+        {
+            return View(accountInteractor.GetPreferencesModel());
+        }
+
 
     }
 }
