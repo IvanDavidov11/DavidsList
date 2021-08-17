@@ -7,6 +7,8 @@
     using Microsoft.AspNetCore.Identity;
     using AspNetCoreHero.ToastNotification.Abstractions;
     using DavidsList.Services.Interfaces;
+    using System.Linq;
+
     public class UserController : Controller
     {
         private readonly SignInManager<User> signInManager;
@@ -95,16 +97,27 @@
         [HttpPost]
         public IActionResult Preferences(int[] curGenre)
         {
-            
+
             if (!User.Identity.IsAuthenticated)
             {
-                return RedirectToAction("Error", "Home"); 
+                return RedirectToAction("Error", "Home");
             }
             accountInteractor.SetGenresForUser(curGenre);
-            return RedirectToAction("Preferences","MyProfile");
+            if (Request.Headers["Referer"].ToString().Contains("MyProfile"))
+            {
+                return RedirectToAction("Preferences", "MyProfile");
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
         public async Task<IActionResult> Logout()
         {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Error", "Home");
+            }
             await this.signInManager.SignOutAsync();
             _notyf.Success("You Logged Out Successfully! Redirecting to home page...");
             return RedirectToAction("Index", "Home");
