@@ -7,14 +7,12 @@
     using Microsoft.AspNetCore.Identity;
     using AspNetCoreHero.ToastNotification.Abstractions;
     using DavidsList.Services.Interfaces;
-    using System.Linq;
 
     public class UserController : Controller
     {
         private readonly SignInManager<User> signInManager;
         private readonly IAccountInteractor accountInteractor;
         private readonly INotyfService _notyf;
-
 
         public UserController(SignInManager<User> signInManager, INotyfService notyf, IAccountInteractor interactor)
         {

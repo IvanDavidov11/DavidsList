@@ -426,7 +426,6 @@ C:\Users\andic\source\repos\DavidsList\DavidsList\obj\Debug\net5.0\Razor\Views\H
 C:\Users\andic\source\repos\DavidsList\DavidsList\obj\Debug\net5.0\Razor\Views\MostPopularMovies\Index.cshtml.g.cs
 C:\Users\andic\source\repos\DavidsList\DavidsList\obj\Debug\net5.0\Razor\Views\MovieDetails\Index.cshtml.g.cs
 C:\Users\andic\source\repos\DavidsList\DavidsList\obj\Debug\net5.0\Razor\Views\RandomMovieGenerator\Index.cshtml.g.cs
-C:\Users\andic\source\repos\DavidsList\DavidsList\obj\Debug\net5.0\Razor\Views\RandomMovieGenerator\Specific.cshtml.g.cs
 C:\Users\andic\source\repos\DavidsList\DavidsList\obj\Debug\net5.0\Razor\Views\Shared\Error.cshtml.g.cs
 C:\Users\andic\source\repos\DavidsList\DavidsList\obj\Debug\net5.0\Razor\Views\Shared\_ButtonsPartial.cshtml.g.cs
 C:\Users\andic\source\repos\DavidsList\DavidsList\obj\Debug\net5.0\Razor\Views\Shared\_Layout.cshtml.g.cs
@@ -450,8 +449,9 @@ C:\Users\andic\source\repos\DavidsList\DavidsList\obj\Debug\net5.0\Razor\Views\M
 C:\Users\andic\source\repos\DavidsList\DavidsList\obj\Debug\net5.0\Razor\Views\Shared\_MyAccountSidebarPartial.cshtml.g.cs
 C:\Users\andic\source\repos\DavidsList\DavidsList\bin\Debug\net5.0\AspNetCoreHero.ToastNotification.Views.dll
 C:\Users\andic\source\repos\DavidsList\DavidsList\bin\Debug\net5.0\AspNetCoreHero.ToastNotification.dll
-C:\Users\andic\source\repos\DavidsList\DavidsList\obj\Debug\net5.0\Razor\Views\RandomMovieGenerator\Surprise.cshtml.g.cs
-C:\Users\andic\source\repos\DavidsList\DavidsList\obj\Debug\net5.0\Razor\Views\RandomMovieGenerator\Preferred.cshtml.g.cs
 C:\Users\andic\source\repos\DavidsList\DavidsList\obj\Debug\net5.0\Razor\Views\User\Preferences.cshtml.g.cs
 C:\Users\andic\source\repos\DavidsList\DavidsList\obj\Debug\net5.0\Razor\Views\MyProfile\Preferences.cshtml.g.cs
 C:\Users\andic\source\repos\DavidsList\DavidsList\obj\Debug\net5.0\Razor\Views\Shared\_PreferencesPartial.cshtml.g.cs
+C:\Users\andic\source\repos\DavidsList\DavidsList\obj\Debug\net5.0\Razor\Views\MyMovies\Favourites.cshtml.g.cs
+C:\Users\andic\source\repos\DavidsList\DavidsList\obj\Debug\net5.0\Razor\Views\MyMovies\Flagged.cshtml.g.cs
+C:\Users\andic\source\repos\DavidsList\DavidsList\obj\Debug\net5.0\Razor\Views\MyMovies\Seen.cshtml.g.cs

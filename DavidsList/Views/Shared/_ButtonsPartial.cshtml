@@ -1,16 +1,47 @@
-﻿
-<a title="I have seen this movie!" href="/Mark/Seen?id=@Model.MoviePath.ToString()"><img src="~/Icons/seen.png" /></a>
-
-<a title="I like this movie!" href="/Mark/Like?id=@Model.MoviePath.ToString()"><img src="~/Icons/Add.png" /></a>
-
-<a title="I dislike this movie!" href="/Mark/Dislike?id=@Model.MoviePath.ToString()"><img src="~/Icons/remove.png" /></a>
-@if (Model.Buttons.IsFavourited)
+﻿@if (!Model.Buttons.IsSeen)
 {
-    <a title="I love this movie!" href="/Mark/Favourite?id=@Model.MoviePath.ToString()"><img src="~/Icons/favHeart.png" /></a>
+    <a title="I have seen this movie!" href="/Mark/Seen?id=@Model.MoviePath.ToString()"><img src="~/Icons/seen.png" /></a>
 }
 else
 {
-    <a title="I love this movie!" href="/Mark/Favourite?id=@Model.MoviePath.ToString()"><img src="~/Icons/favHeartNot.png" /></a>
+    <a title="Unmark movie as favourite" href="/Mark/Seen?id=@Model.MoviePath.ToString()"><img src="~/Icons/seen_Unmarked.png" /></a>
 }
 
-<a title="I hate this movie!" href="/Mark/Flagg?id=@Model.MoviePath.ToString()"><img src="~/Icons/trash.png" /></a>
+@if (!Model.Buttons.IsLiked)
+{
+    <a title="Unmark movie as favourite" href="/Mark/Like?id=@Model.MoviePath.ToString()"><img src="~/Icons/Add_Unmarked.png" /></a>
+}
+else
+{
+    <a title="I like this movie!" href="/Mark/Like?id=@Model.MoviePath.ToString()"><img src="~/Icons/Add.png" /></a>
+}
+
+@if (!Model.Buttons.IsDisliked)
+{
+    <a title="Mark movie as Disliked!" href="/Mark/Dislike?id=@Model.MoviePath.ToString()"><img src="~/Icons/remove_Unmarked.png" /></a>
+}
+else
+{
+    <a title="Mark movie as Disliked!" href="/Mark/Dislike?id=@Model.MoviePath.ToString()"><img src="~/Icons/remove.png" /></a>
+
+}
+
+@if (!Model.Buttons.IsFavourited)
+{
+    <a title="Unmark movie as favourite" href="/Mark/Favourite?id=@Model.MoviePath.ToString()"><img src="~/Icons/favHeartNot.png" /></a>
+}
+
+else
+{
+    <a title="Mark movie as favourite!" href="/Mark/Favourite?id=@Model.MoviePath.ToString()"><img src="~/Icons/favHeart.png" /></a>
+}
+
+@if (!Model.Buttons.IsFlagged)
+{
+    <a title="I hate this movie!" href="/Mark/Flagg?id=@Model.MoviePath.ToString()"><img src="~/Icons/trash.png" /></a>
+}
+else
+{
+    <a title="Unmark movie as favourite" href="/Mark/Flagg?id=@Model.MoviePath.ToString()"><img src="~/Icons/trash_Unmarked.png" /></a>
+}
+

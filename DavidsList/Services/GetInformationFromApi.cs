@@ -18,6 +18,7 @@
     using DavidsList.Data;
     using AspNetCoreHero.ToastNotification.Abstractions;
     using DavidsList.Models;
+    using DavidsList.Data.DbModels;
 
     public class GetInformationFromApi : IGetInformationFromApi
     {
@@ -302,31 +303,28 @@
             return result;
         }
 
-        public MovieDetailsViewModel GetRandomMovieModel_Surprise()
+        public string GetRandomMoviePath_Specific()
         {
             var pickedGenre = PickRandomGenreFrom_AllGenres();
-            var allMoviesOfGenre = GetMoviesFromGenre(pickedGenre.ToLower()).Result;
+            var allMoviesOfGenre = GetMoviesFromGenre(pickedGenre.ApiPath).Result;
             var pickedMovie = CleanUpMoviePath(PickRandomMovie(allMoviesOfGenre));
-            var result = GetSpecificMovieDetails(pickedMovie).Result;
-            _notyf.Custom($"Suggested movie in genre: {pickedGenre}", null, "yellow");
-            return result;
+            _notyf.Custom($"Suggested movie in genre: {pickedGenre.GenreType}", null, "yellow");
+            return pickedMovie;
         }
-        public MovieDetailsViewModel GetRandomMovieModel_Preferred()
+        public string GetRandomMoviePath_Preferred()
         {
             var pickedGenre = PickRandomGenreFrom_PreferredGenres();
-            var allMoviesOfGenre = GetMoviesFromGenre(pickedGenre.ToLower()).Result;
+            var allMoviesOfGenre = GetMoviesFromGenre(pickedGenre.ApiPath).Result;
             var pickedMovie = CleanUpMoviePath(PickRandomMovie(allMoviesOfGenre));
-            var result = GetSpecificMovieDetails(pickedMovie).Result;
-            _notyf.Custom($"Suggested movie in genre: {pickedGenre}", null, "yellow");
-            return result;
+            _notyf.Custom($"Suggested movie in genre: {pickedGenre.GenreType}", null, "yellow");
+            return pickedMovie;
         }
-        public MovieDetailsViewModel GetRandomMovieModel_Specific(string genre)
+        public string GetRandomMoviePath_Specific(string genre)
         {
             var allMoviesOfGenre = GetMoviesFromGenre(genre.ToLower()).Result;
             var pickedMovie = CleanUpMoviePath(PickRandomMovie(allMoviesOfGenre));
-            var result = GetSpecificMovieDetails(pickedMovie).Result;
             _notyf.Custom($"Suggested movie in genre: {genre}", null, "yellow");
-            return result;
+            return pickedMovie;
         }
 
         private async Task<List<string>> GetMoviesFromGenre(string genre)
@@ -334,7 +332,7 @@
             var request = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
-                RequestUri = new Uri($"https://imdb8.p.rapidapi.com/title/get-popular-movies-by-genre?genre=%2Fchart%2Fpopular%2Fgenre%2F{genre}"),
+                RequestUri = new Uri($"https://imdb8.p.rapidapi.com/title/get-popular-movies-by-genre?genre={genre}"),
                 Headers =
                 {
                     { "x-rapidapi-key", IMDbApiKey },
@@ -354,23 +352,23 @@
             var result = movies[rngPicker.Next(0, movies.Count)];
             return result;
         }
-        private string PickRandomGenreFrom_AllGenres()
+        private Genre PickRandomGenreFrom_AllGenres()
         {
             var allGenres = data.Genres.ToList();
-            return allGenres[this.rngPicker.Next(0, allGenres.Count)].GenreType.ToString();
+            return allGenres[this.rngPicker.Next(0, allGenres.Count)];
         }
-        private string PickRandomGenreFrom_PreferredGenres()
+        private Genre PickRandomGenreFrom_PreferredGenres()
         {
             var curUser = user.GetUser().Identity.Name;
             var preferredGenres = data.Users.Include(x => x.UserGenres).ThenInclude(x => x.Genre).FirstOrDefault(x => x.UserName == curUser).UserGenres;
-            return preferredGenres.ElementAt(this.rngPicker.Next(0, preferredGenres.Count)).Genre.GenreType.ToString();
+            return preferredGenres.ElementAt(this.rngPicker.Next(0, preferredGenres.Count)).Genre;
         }
 
         public bool CheckIfUserHasFavouritedGenre()
         {
             var username = user.GetUser().Identity.Name;
-            var curUser = data.Users.Include(x=>x.UserGenres).First(x => x.UserName == username);
-            return curUser.UserGenres.Count <= 0 ? false : true; 
+            var curUser = data.Users.Include(x => x.UserGenres).First(x => x.UserName == username);
+            return curUser.UserGenres.Count <= 0 ? false : true;
         }
     }
 }

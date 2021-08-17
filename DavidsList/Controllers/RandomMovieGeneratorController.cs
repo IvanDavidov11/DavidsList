@@ -14,18 +14,19 @@ namespace DavidsList.Controllers
             this.ApiConnector = connector;
             _notyf = notyf;
         }
-
         public IActionResult Index()
         {
             return View();
         }
         public IActionResult Specific()
         {
-            return View(ApiConnector.GetRandomMovieModel_Surprise());
+            var moviePath = ApiConnector.GetRandomMoviePath_Specific();
+            return RedirectToAction("Index", "MovieDetails", new { id = moviePath });
         }
         public IActionResult Surprise()
         {
-            return View(ApiConnector.GetRandomMovieModel_Surprise());
+            var moviePath = ApiConnector.GetRandomMoviePath_Specific();
+            return RedirectToAction("Index", "MovieDetails", new { id = moviePath });
         }
         public IActionResult Preferred()
         {
@@ -39,7 +40,8 @@ namespace DavidsList.Controllers
                 _notyf.Error("You have no favourited genres. Go to \"MyProfile\" and then \"Prefrence\" to set them up...");
                 return RedirectToAction("Index", "RandomMovieGenerator");
             }
-            return View(ApiConnector.GetRandomMovieModel_Preferred());
+            var moviePath = ApiConnector.GetRandomMoviePath_Preferred();
+            return RedirectToAction("Index", "MovieDetails", new { id = moviePath });
         }
     }
 }
