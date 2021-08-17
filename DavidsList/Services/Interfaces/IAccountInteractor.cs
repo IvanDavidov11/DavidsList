@@ -12,5 +12,8 @@
         public List<GenreViewModel> GetPreferencesModel();
         public void SetGenresForUser(int[] genres);
         public bool CheckIfFirstTimeLogin(string username);
+        public MyProfileViewModel GetMyProfileViewModel();
+        public MyProfileViewModel SetMyProfileDetails(string intrd,string url);
+        public List<GenreViewModel> GetPreferencesModel_Specific();
     }
 }

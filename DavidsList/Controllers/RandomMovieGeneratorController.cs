@@ -17,8 +17,7 @@ namespace DavidsList.Controllers
         }
         public IActionResult Index()
         {
-
-            return View(accountInteractor.GetPreferencesModel());
+            return View(accountInteractor.GetPreferencesModel_Specific());
         }
         public IActionResult Specific(int curGenre)
         {

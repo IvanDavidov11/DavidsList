@@ -12,6 +12,7 @@
     using DavidsList.Models.ViewModels;
     using DavidsList.Data.DbModels.ManyToManyTables;
     using Microsoft.EntityFrameworkCore;
+    using System;
 
     public class AccountInteractor : IAccountInteractor
     {
@@ -125,7 +126,7 @@
         public List<GenreViewModel> GetPreferencesModel()
         {
             var username = user.GetUser().Identity.Name;
-            var curUser = data.Users.Include(x => x.UserGenres).First(x => x.UserName == username);
+             var curUser = data.Users.Include(x => x.UserGenres).First(x => x.UserName == username);
             var result = new List<GenreViewModel>();
             foreach (var genre in data.Genres)
             {
@@ -138,6 +139,46 @@
             }
             return result;
         }
+        public List<GenreViewModel> GetPreferencesModel_Specific()
+        {
+            var result = new List<GenreViewModel>();
+            foreach (var genre in data.Genres)
+            {
+                result.Add(new GenreViewModel
+                {
+                    Id = genre.Id,
+                    GenreType = genre.GenreType,
+                    IsPicked = false
+                });
+            }
+            return result;
+        }
 
+        public MyProfileViewModel GetMyProfileViewModel()
+        {
+            var curUser = data.Users.FirstOrDefault(x => x.UserName == user.GetUser().Identity.Name);
+            return new MyProfileViewModel
+            {
+                Email = curUser.Email,
+                ImageUrl = curUser.ProfilePictureUrl == null ? "https://cdn.drawception.com/drawings/A4xPK14g50.png" : curUser.ProfilePictureUrl,
+                Introduction = curUser.Introduction,
+            };
+        }
+
+        public MyProfileViewModel SetMyProfileDetails(string intrd, string url)
+        {
+            if (intrd != null)
+            {
+                data.Users.FirstOrDefault(x => x.UserName == user.GetUser().Identity.Name).Introduction = intrd;
+                _notyf.Success("Successfuly changed profile introdcution...");
+            }
+            if (url != null && Uri.IsWellFormedUriString(url, UriKind.Absolute))
+            {
+                data.Users.FirstOrDefault(x => x.UserName == user.GetUser().Identity.Name).ProfilePictureUrl = url;
+                _notyf.Success("Successfuly changed profile picture...");
+            }
+            data.SaveChanges();
+            return GetMyProfileViewModel();
+        }
     }
 }
