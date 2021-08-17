@@ -455,3 +455,4 @@ C:\Users\andic\source\repos\DavidsList\DavidsList\obj\Debug\net5.0\Razor\Views\S
 C:\Users\andic\source\repos\DavidsList\DavidsList\obj\Debug\net5.0\Razor\Views\MyMovies\Favourites.cshtml.g.cs
 C:\Users\andic\source\repos\DavidsList\DavidsList\obj\Debug\net5.0\Razor\Views\MyMovies\Flagged.cshtml.g.cs
 C:\Users\andic\source\repos\DavidsList\DavidsList\obj\Debug\net5.0\Razor\Views\MyMovies\Seen.cshtml.g.cs
+C:\Users\andic\source\repos\DavidsList\DavidsList\obj\Debug\net5.0\Razor\Views\MyProfile\UpdateAccountDetails.cshtml.g.cs

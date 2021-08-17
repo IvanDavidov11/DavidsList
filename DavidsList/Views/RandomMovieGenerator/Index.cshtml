@@ -1,8 +1,33 @@
-﻿<a href="RandomMovieGenerator/Surprise" class="btn btn-primary btn-lg btn-block rnd-btn" role="button" aria-disabled="true">SURPRISE ME!</a>
+﻿<a href="RandomMovieGenerator/Surprise" class="btn btn-primary btn-lg btn-block rnd-btn" role="button" aria-disabled="true">SURPRISE ME</a>
 <p class="rnd-btn-description">Get suggested a fully random movie based on no specific filters.</p>
 
-<a href="RandomMovieGenerator/Preferred" class="btn btn-primary btn-lg btn-block rnd-btn" role="button" aria-disabled="true">SOMETHING I LIKE!</a>
+<a href="RandomMovieGenerator/Preferred" class="btn btn-primary btn-lg btn-block rnd-btn" role="button" aria-disabled="true">SOMETHING I LIKE</a>
 <p class="rnd-btn-description">Get suggested a random movie based on your favourite genres.</p>
 
-<a href="RandomMovieGenerator/Specific" class="btn btn-primary btn-lg btn-block rnd-btn" role="button" aria-disabled="true">SOMETHING SPECIFIC!</a>
-<p class="rnd-btn-description">Get suggested a random movie based on a specifc genre you choose.</p>
+<div>
+    <a id="specificBtn" class="btn btn-primary btn-lg btn-block rnd-btn" aria-disabled="true">SOMETHING SPECIFIC</a>
+    <p class="rnd-btn-description">Get suggested a random movie based on a specifc genre you choose.</p>
+    <div id="divSpecific" class="pickSpecific" style="display:none">
+        <div class="genres-container">
+            <form action="/RandomMovieGenerator/Specific" method="post">
+                @foreach (var curGenre in Model)
+                {
+                    <div class="form-check form-check-inline">
+                        @if (curGenre.IsPicked)
+                        {
+                            <input class="form-check-input" type="radio" id=@curGenre.Id name="curGenre" value=@curGenre.Id checked>
+                        }
+                        else
+                        {
+                            <input class="form-check-input" type="radio" id=@curGenre.Id name="curGenre" value=@curGenre.Id>
+                        }
+                        <label class="form-check-label" for=@curGenre.Id>@curGenre.GenreType</label>
+                    </div>
+                }
+                <button type="submit">
+                    <i>GET SUGGESTION</i>
+                </button>
+            </form>
+        </div>
+    </div>
+</div>

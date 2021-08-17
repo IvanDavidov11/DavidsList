@@ -1,0 +1,41 @@
+﻿.myMoviesList {
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+}
+
+    .myMoviesList li {
+        width: 33%;
+        display: inline-block;
+        text-align: center;
+        padding-bottom: 85px;
+        margin-left: inherit;
+        margin-right: inherit;
+    }
+
+    .myMoviesList div.regular {
+        margin: 0px 10px 0px 10px;
+        height: 600px
+    }
+
+    .myMoviesList div.topRated {
+        margin: 0px 10px 0px 10px;
+        height: 600px
+    }
+
+    .myMoviesList a {
+        width: 25px;
+        height: 25px;
+        margin-right: 20px;
+    }
+
+
+.thumbnailPicMyMovies {
+    border: 3px solid #ddd;
+    border-radius: 12px;
+    padding: 5px;
+    display: inline;
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%;
+}

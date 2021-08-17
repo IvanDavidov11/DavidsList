@@ -1,4 +1,7 @@
-﻿
+﻿#sidebar{
+    width:186px;
+    height:180px;
+}
 
 .sidebar-box{
     margin-right:100px;
@@ -36,6 +39,7 @@
 a[aria-expanded="true"] {
     color: white;
     background: red;
+    border-radius: 5px;    
 }
 
 a[data-toggle="collapse"] {

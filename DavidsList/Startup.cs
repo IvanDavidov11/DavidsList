@@ -44,8 +44,9 @@ namespace DavidsList
             services.AddNotyf(config => { config.DurationInSeconds = 8; config.IsDismissable = true; config.Position = NotyfPosition.TopRight; });
             services.AddHttpContextAccessor();
             services.AddTransient<IUserService, UserService>();
-            services.AddTransient<IMarkMovieService, MarkMovieService>();
             services.AddTransient<IAccountInteractor,AccountInteractor>();
+            services.AddTransient<IMarkMovieService, MarkMovieService>();
+            services.AddTransient<IDatabaseInteractor, DatabaseInteractor>();
 
         }
 

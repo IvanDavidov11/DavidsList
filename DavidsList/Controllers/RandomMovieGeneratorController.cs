@@ -7,25 +7,27 @@ namespace DavidsList.Controllers
     public class RandomMovieGeneratorController : Controller
     {
         private readonly INotyfService _notyf;
-
+        private readonly IAccountInteractor accountInteractor;
         private readonly IGetInformationFromApi ApiConnector;
-        public RandomMovieGeneratorController(IGetInformationFromApi connector, INotyfService notyf)
+        public RandomMovieGeneratorController(IGetInformationFromApi connector, INotyfService notyf, IAccountInteractor accountInteractor)
         {
             this.ApiConnector = connector;
-            _notyf = notyf;
+            this._notyf = notyf;
+            this.accountInteractor = accountInteractor;
         }
         public IActionResult Index()
         {
-            return View();
+
+            return View(accountInteractor.GetPreferencesModel());
         }
-        public IActionResult Specific()
+        public IActionResult Specific(int curGenre)
         {
-            var moviePath = ApiConnector.GetRandomMoviePath_Specific();
+            var moviePath = ApiConnector.GetRandomMoviePath_Specific(curGenre);
             return RedirectToAction("Index", "MovieDetails", new { id = moviePath });
         }
         public IActionResult Surprise()
         {
-            var moviePath = ApiConnector.GetRandomMoviePath_Specific();
+            var moviePath = ApiConnector.GetRandomMoviePath_Surprise();
             return RedirectToAction("Index", "MovieDetails", new { id = moviePath });
         }
         public IActionResult Preferred()

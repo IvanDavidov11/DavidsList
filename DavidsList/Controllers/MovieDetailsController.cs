@@ -16,7 +16,5 @@
             var model =  this.ApiConnector.GetSpecificMovieDetails(id).Result;
             return View(model);
         }
-
-        
     }
 }

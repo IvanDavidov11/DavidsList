@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DavidsList.Migrations
 {
     [DbContext(typeof(DavidsListDbContext))]
-    [Migration("20210816145930_mongoose")]
+    [Migration("20210817192938_mongoose")]
     partial class mongoose
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -172,7 +172,19 @@ namespace DavidsList.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("Img")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("MoviePath")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ReleaseDate")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

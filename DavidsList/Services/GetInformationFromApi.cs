@@ -285,7 +285,7 @@
             return path.Substring(7, path.Length - 8);
         }
 
-        private Button CreateButtonModel(string movieId)
+        public Button CreateButtonModel(string movieId)
         {
             var curUser = GetUserFromService();
             if (!this.user.GetUser().Identity.IsAuthenticated)
@@ -303,7 +303,7 @@
             return result;
         }
 
-        public string GetRandomMoviePath_Specific()
+        public string GetRandomMoviePath_Surprise()
         {
             var pickedGenre = PickRandomGenreFrom_AllGenres();
             var allMoviesOfGenre = GetMoviesFromGenre(pickedGenre.ApiPath).Result;
@@ -319,13 +319,16 @@
             _notyf.Custom($"Suggested movie in genre: {pickedGenre.GenreType}", null, "yellow");
             return pickedMovie;
         }
-        public string GetRandomMoviePath_Specific(string genre)
+        public string GetRandomMoviePath_Specific(int genre)
         {
-            var allMoviesOfGenre = GetMoviesFromGenre(genre.ToLower()).Result;
+            var pickedGenre = PickRandomGenreFrom_Specific(genre);
+            var allMoviesOfGenre = GetMoviesFromGenre(pickedGenre.ApiPath).Result;
             var pickedMovie = CleanUpMoviePath(PickRandomMovie(allMoviesOfGenre));
-            _notyf.Custom($"Suggested movie in genre: {genre}", null, "yellow");
+            _notyf.Custom($"Suggested movie in genre: {pickedGenre.GenreType}", null, "yellow");
             return pickedMovie;
         }
+
+
 
         private async Task<List<string>> GetMoviesFromGenre(string genre)
         {
@@ -362,6 +365,10 @@
             var curUser = user.GetUser().Identity.Name;
             var preferredGenres = data.Users.Include(x => x.UserGenres).ThenInclude(x => x.Genre).FirstOrDefault(x => x.UserName == curUser).UserGenres;
             return preferredGenres.ElementAt(this.rngPicker.Next(0, preferredGenres.Count)).Genre;
+        }
+        private Genre PickRandomGenreFrom_Specific(int genre)
+        {
+            return data.Genres.First(x => x.Id == genre);
         }
 
         public bool CheckIfUserHasFavouritedGenre()

@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="~/css/sidebar.css" />
     <link rel="stylesheet" href="~/css/myProfile.css" />
     <link rel="stylesheet" href="~/css/randomMovieGeneratorStyles.css" />
+    <link rel="stylesheet" href="~/css/myMovies.css" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Kreon&display=swap" rel="stylesheet">
@@ -30,7 +32,7 @@
                     <form action="/Search/Result">
                         <input class="searchBarInput" type="text" placeholder="Search for a Movie..." name="query" id="query" />
                         <button class="searchBarButton" type="submit">
-                            <i><b>Search</b></i>
+                            <i>Search</i>
                         </button>
                     </form>
                 </div>
@@ -62,6 +64,7 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/sidebar.js"></script>
     @await Component.InvokeAsync("Notyf")
     @RenderSection("Scripts", required: false)
 </body>

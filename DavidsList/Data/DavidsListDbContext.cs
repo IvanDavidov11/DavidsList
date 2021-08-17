@@ -20,6 +20,7 @@
         public DbSet<FavouritedMovie> FavouritedMovies { get; init; }
         public DbSet<DislikedMovie> DislikedMovies { get; init; }
         public DbSet<FlaggedMovie> FlaggedMovies { get; init; }
+        public object FirstOrDefault { get; internal set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

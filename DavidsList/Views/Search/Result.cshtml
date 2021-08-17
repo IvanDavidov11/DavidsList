@@ -1,5 +1,5 @@
 ﻿<div style="background-color: darkslategray" class="jumbotron">
-    <h1 style="text-align:center; " class="display-4">Here are your search results:!</h1>
+    <h1 style="text-align:center; " class="display-4">Here are your search results:</h1>
 </div>
 
 <ol class="list">
@@ -11,7 +11,7 @@
                     <img class="thumbnailPic" src="@movie.ImgUrl">
                 </a>
                 <h1>@movie.Title</h1>
-                <h3>Relase Date: @movie.Year</h3>
+                <h3>Release Date: @movie.Year</h3>
                 @if (movie.Buttons != null)
                 {
                     <partial name="_ButtonsPartial" model="@movie" />

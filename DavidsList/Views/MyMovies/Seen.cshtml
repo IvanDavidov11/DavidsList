@@ -1,5 +1,20 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿<div style="background-color: darkslategray" class="jumbotron">
+    <h1 style="text-align:center; " class="display-4">Here are the movies you've seen:</h1>
+</div>
+<ol class="myMoviesList">
+    @foreach (var movie in Model)
+    {
+        <li>
+            <div class="topRated">
+                <a href="/MovieDetails?id=@movie.MoviePath">
+                    <img class="thumbnailPicMyMovies" src="@movie.ImageUrl">
+                </a>
+                <h1>@movie.Title</h1>
+                <h3>Release Date: @movie.ReleaseDate</h3>
+                @if (movie.Buttons != null)
+                {
+                    <partial name="_ButtonsPartial" model="@movie" />}
+            </div>
+        </li>
+    }
+</ol>

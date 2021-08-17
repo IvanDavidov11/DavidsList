@@ -1,4 +1,18 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿const element = {
+    btnSpec: () => document.getElementById('specificBtn'),
+    specDiv: () => document.getElementById('divSpecific')
+}
 
-// Write your JavaScript code.
+if (window.location.href.includes('RandomMovieGenerator')) {
+    element.btnSpec().addEventListener('click', showMore)
+    function showMore(e) {
+        if (e.target.innerText == "SOMETHING SPECIFIC") {
+            if (element.specDiv().style.display == 'none') {
+                element.specDiv().style.display = 'block';
+            }
+            else {
+                element.specDiv().style.display = 'none';
+            }
+        }
+    }
+}

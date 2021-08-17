@@ -13,12 +13,13 @@
     {
         private readonly DavidsListDbContext data;
         private readonly INotyfService _notyf;
+        private readonly IGetInformationFromApi apiConnector;
 
-
-        public MarkMovieService(DavidsListDbContext db, INotyfService notyf)
+        public MarkMovieService(DavidsListDbContext db, INotyfService notyf, IGetInformationFromApi apiInf)
         {
             this.data = db;
-            _notyf = notyf;
+            this._notyf = notyf;
+            this.apiConnector = apiInf;
         }
 
         public void MarkMovieAsDisliked(string movieId, string userName)
@@ -156,13 +157,17 @@
         }
         private void CreateMovieIfItDoesNotExist(string moviePath)
         {
+            var movieDetails = apiConnector.GetSpecificMovieDetails(moviePath).Result;
             if (data.Movies.FirstOrDefault(x => x.MoviePath == moviePath) == null)
             {
                 var movieId = Guid.NewGuid().ToString();
                 data.Movies.Add(new Movie
                 {
                     Id = movieId,
-                    MoviePath = moviePath
+                    MoviePath = moviePath,
+                    Img = movieDetails.ImgUrl,
+                    ReleaseDate = movieDetails.ReleaseDate,
+                    Title = movieDetails.Title,
                 });
                 data.SaveChanges();
             }

@@ -16,8 +16,6 @@
         private readonly DavidsListDbContext data;
         private readonly INotyfService _notyf;
         private readonly IAccountInteractor accountInteractor;
-
-
         public MyProfileController(UserManager<User> userManager, DavidsListDbContext db, INotyfService notyf, IAccountInteractor interactor)
         {
             this.userManager = userManager;
@@ -40,7 +38,6 @@
             };
             return View(model);
         }
-
         [HttpPost]
         public IActionResult Index(string intrd, string url)
         {
@@ -73,12 +70,9 @@
             };
             return View(model);
         }
-
         public IActionResult Preferences()
         {
             return View(accountInteractor.GetPreferencesModel());
         }
-
-
     }
 }
