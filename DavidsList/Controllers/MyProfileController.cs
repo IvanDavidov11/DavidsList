@@ -17,6 +17,7 @@
             }
             return View(accountInteractor.GetMyProfileViewModel());
         }
+       
         [HttpPost]
         public IActionResult Index(string intrd, string url)
         {
@@ -32,6 +33,10 @@
         }
         public IActionResult Preferences()
         {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Error", "Home");
+            }
             return View(accountInteractor.GetPreferencesModel());
         }
     }

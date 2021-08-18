@@ -1,6 +1,5 @@
 ﻿namespace DavidsList.Controllers
 {
-    using DavidsList.Data;
     using Microsoft.AspNetCore.Mvc;
     using DavidsList.Services.Interfaces;
 
