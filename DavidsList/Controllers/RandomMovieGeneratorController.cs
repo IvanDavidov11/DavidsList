@@ -19,8 +19,15 @@ namespace DavidsList.Controllers
         {
             return View(accountInteractor.GetPreferencesModel_Specific());
         }
+
+        [IgnoreAntiforgeryToken]
         public IActionResult Specific(int curGenre)
         {
+            if (curGenre == null || curGenre == 0)
+            {
+                _notyf.Warning("Please select a genre to get a specific suggestion...");
+                return RedirectToAction("Index", "RandomMovieGenerator");
+            }
             var moviePath = ApiConnector.GetRandomMoviePath_Specific(curGenre);
             return RedirectToAction("Index", "MovieDetails", new { id = moviePath });
         }

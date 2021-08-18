@@ -19,6 +19,7 @@
         }
        
         [HttpPost]
+        [IgnoreAntiforgeryToken]
         public IActionResult Index(string intrd, string url)
         {
             if (!User.Identity.IsAuthenticated)

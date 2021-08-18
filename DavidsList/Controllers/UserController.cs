@@ -92,6 +92,8 @@
 
         }
 
+
+        [IgnoreAntiforgeryToken]
         [HttpPost]
         public IActionResult Preferences(int[] curGenre)
         {
