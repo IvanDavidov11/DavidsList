@@ -11,7 +11,7 @@
     using System.Linq;
     using System.Net.Http;
     using System.Threading.Tasks;
-
+    using static Data.DataConstants; 
     public static class AppBuilderExtenstions
     {
         public static IApplicationBuilder PrepareDatabase(this IApplicationBuilder app)
@@ -42,8 +42,8 @@
                 RequestUri = new Uri("https://imdb8.p.rapidapi.com/title/list-popular-genres"),
                 Headers =
             {
-                 { "x-rapidapi-key", "6e96b86691mshebfd322284464b6p1c6f16jsnc9e27395f9df" },
-                 { "x-rapidapi-host", "imdb8.p.rapidapi.com" },
+                 { "x-rapidapi-key", IMDbApiKey },
+                 { "x-rapidapi-host", IMDbApiHost },
             },
             };
             using (var response = await client.SendAsync(request))

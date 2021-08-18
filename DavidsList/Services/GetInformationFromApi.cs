@@ -4,6 +4,7 @@
     using System.Linq;
     using System.Net.Http;
     using Newtonsoft.Json;
+    using DavidsList.Data;
     using System.Threading;
     using System.Threading.Tasks;
     using static Data.DataConstants;
@@ -13,12 +14,11 @@
     using DavidsList.Models.API.SearchResults;
     using DavidsList.Models.API.TopRatedMovies;
     using DavidsList.Models.API.MostPopularMovies;
+    using AspNetCoreHero.ToastNotification.Abstractions;
     using DavidsList.Models.MovieDetails;
     using Microsoft.EntityFrameworkCore;
-    using DavidsList.Data;
-    using AspNetCoreHero.ToastNotification.Abstractions;
-    using DavidsList.Models;
     using DavidsList.Data.DbModels;
+    using DavidsList.Models;
 
     public class GetInformationFromApi : IGetInformationFromApi
     {

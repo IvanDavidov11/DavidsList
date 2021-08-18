@@ -1,16 +1,7 @@
 ﻿namespace DavidsList.Controllers
 {
-    using AspNetCoreHero.ToastNotification.Abstractions;
-    using DavidsList.Data;
-    using DavidsList.Data.DbModels;
-    using DavidsList.Models.ViewModels;
     using DavidsList.Services.Interfaces;
-    using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
-    using System;
-    using System.Linq;
-
     public class MyProfileController : Controller
     {
         private readonly IAccountInteractor accountInteractor;
