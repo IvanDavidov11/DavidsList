@@ -13,6 +13,7 @@
     using DavidsList.Data.DbModels.ManyToManyTables;
     using Microsoft.EntityFrameworkCore;
     using System;
+    using Microsoft.AspNetCore.Mvc;
 
     public class AccountInteractor : IAccountInteractor
     {
@@ -53,6 +54,8 @@
             return curUser.FirstTimeLogginIn;
         }
 
+
+
         public async Task<Dictionary<string, string>> TryLoggingUserIn(LoginFormModel model)
         {
             var errors = new Dictionary<string, string>();
@@ -77,6 +80,7 @@
             _notyf.Success("Logged-in successfuly, redirecting to Home page.");
             return null;
         }
+
 
         public async Task<Dictionary<string, string>> TryRegisteringUser(RegisterFormModel model)
         {

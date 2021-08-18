@@ -1,6 +1,8 @@
 ﻿@model RegisterFormModel
 @using static DavidsList.Data.DataConstants
 
+
+
 <h1>Register</h1>
 <div class="row">
     <div class="col-md-4">
@@ -14,7 +16,6 @@
                 <span class="text-danger">
                     @Html.ValidationMessage("EmailTaken")
                 </span>
-
             </div>
             <div class="form-group">
                 <label asp-for="Username">Username * <a style="color:gray">(@UsernameMinLength-@UsernameMaxLength character limit)</a></label>
@@ -34,8 +35,8 @@
                 <input type="password" asp-for="ConfirmPassword" class="form-control">
                 <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
             </div>
-            <button id="registerSubmit" type="submit" class="btn btn-primary">Register</button>
-            <input name="__RequestVerificationToken" type="hidden" value="CfDJ8B__fkIdgU5MoaNRcqVSn7cX2ylF2CeWm31X6GaLAfPYJT2cm-4WLUV-GY_g1BkGfK8U9wc26H96O0agDMX2xVq04Ma7WagQRTkQBtVK_oNX9CmDLH44KtsRvPxOPXr6_VqO5H4qCqYFxQPtvzA368U">
+            @Html.AntiForgeryToken()
+            <button id="registerSubmit" type="submit" class="btn btn-primary">Register </button>
         </form>
     </div>
     <div class="col-md-6 col-md-offset-2">

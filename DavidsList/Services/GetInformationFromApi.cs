@@ -277,6 +277,7 @@
                 .ThenInclude(x => x.Movie)
                 .Include(x => x.DislikedMovies)
                 .ThenInclude(x => x.Movie)
+                .AsSplitQuery()
                 .FirstOrDefault(x => x.UserName == uName);
             return curUser;
         }

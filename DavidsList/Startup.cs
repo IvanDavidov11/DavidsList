@@ -12,6 +12,9 @@ namespace DavidsList
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Hosting;
+    using Microsoft.EntityFrameworkCore.Diagnostics;
+    using Microsoft.AspNetCore.Mvc;
+
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -25,7 +28,13 @@ namespace DavidsList
         {
             services.AddDbContext<DavidsListDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+                    Configuration.GetConnectionString("DefaultConnection")
+                    ).ConfigureWarnings(x => x.Ignore(CoreEventId.RowLimitingOperationWithoutOrderByWarning)));
+
+            services.AddControllersWithViews(options =>
+            {
+                options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
+            });
 
             services.AddDatabaseDeveloperPageExceptionFilter();
 
